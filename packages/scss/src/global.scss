@@ -1,0 +1,32 @@
+/*=============================================
+=            Global CSS Styles                =
+=============================================*/
+
+/*----------  Inter Google Font  ----------*/
+
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+/*----------  Theme  ----------*/
+
+@import "./theme/foundation";
+
+/*----------  Base Styling & Reset  ----------*/
+:root {
+  font-size: 62.5%; /*  make "1rem" = "10px" for better understanding of relation b/w "rem" & "px" units. */
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $inter;
+  font-size: $fs-md;
+  font-weight: $fw-regular;
+  color: $text-primary-color;
+}

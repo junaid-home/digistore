@@ -1,0 +1,20 @@
+{
+  "name": "@digistore/core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Junaid Javed <jj123dev@gmail.com>",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.0.3"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": []
+  },
+  "scripts": {
+    "build": "yarn lerna run build"
+  }
+}

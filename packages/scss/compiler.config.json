@@ -1,0 +1,5 @@
+{
+  "files": ["global.scss"],
+  "include": ["atoms", "molecules", "organisms"],
+  "outDir": "lib"
+}

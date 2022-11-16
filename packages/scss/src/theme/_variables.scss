@@ -1,0 +1,77 @@
+/*=============================================
+=        Color variables (hex values)         =
+=============================================*/
+
+/*----------  Brand colors  ----------*/
+
+$red: #dc2626;
+$red-light: #fecaca;
+
+$blue: #2563eb;
+$blue-light: #93c5fd;
+
+/*----------  Neutral colors  ----------*/
+
+$black: #111827;
+$white: #fff;
+$grey-light: #f3f3f3;
+$grey: #dfe3e4;
+$grey-medium: #a1a1a1;
+$grey-dark: #a3a3a3;
+
+/*----------  Utility colors  ----------*/
+
+$yellow: #fbbf24;
+
+/*=====  End of Color Variables (hex values)  ======*/
+
+/*=============================================
+=            Typography Variables             =
+=============================================*/
+
+/*----------  Font Family  ----------*/
+
+/**
+*   The Inter Google font. We'll use this throughout our application.
+*       https://fonts.google.com/specimen/Inter
+*/
+$inter: "Inter", sans-serif;
+
+/*----------  Font Sizes  ----------*/
+
+$fs-xs: 1rem;
+$fs-sm: 1.2rem;
+$fs-md: 1.4rem;
+$fs-lg: 1.6rem;
+$fs-xl: 2rem;
+
+/*----------  Heading Font Sizes  ----------*/
+
+$hfs-xs: 1rem;
+$hfs-sm: 1.8rem;
+$hfs-md: 2rem;
+$hfs-lg: 2.6rem;
+$hfs-xl: 3.6rem;
+
+/*----------  Font weights  ----------*/
+
+$fw-thin: 100;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-semibold: 600;
+$fw-bold: 700;
+$fw-black: 900;
+
+/*=====  End of Typography Variables   ======*/
+
+/*=============================================
+=            Breakpoint Variables             =
+=============================================*/
+
+$breakpoints: (
+  sm: 76.8rem,
+  md: 102.4rem,
+  lg: 128rem,
+);
+
+/*=====  End of Breakpoints   ======*/

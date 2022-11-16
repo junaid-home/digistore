@@ -1,0 +1,25 @@
+/*=============================================
+=            Mixins (reuseable css code)      =
+=============================================*/
+
+/*----------  Media Query Helpers  ----------*/
+
+@mixin phone {
+  @media (min-width: map-get($breakpoints, "sm")) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: map-get($breakpoints, "md")) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: map-get($breakpoints, "lg")) {
+    @content;
+  }
+}
+
+/*=====  End of Mixins (reuseable css code)  ======*/

@@ -1,0 +1,16 @@
+/*=============================================
+=        Global Theme Color Variables         =
+=============================================*/
+
+$primary-color: var(--ds-primary-color, $red) !default;
+$primary-light-color: var(--ds-primary-light-color, $red-light) !default;
+$secondary-color: var(--ds-secondary-color, $blue) !default;
+
+$text-primary-color: var(--ds-text-primary-color, $black) !default;
+$text-primary-inverted-color: var(--ds-text-primary-inverted-color, $white) !default;
+$text-secondary-color: var(--ds-text-secondary-color, $grey-medium) !default;
+$text-secondary-dark-color: var(--ds-text-secondary-dark-color, $grey-dark) !default;
+
+$surface-color: var(--ds-surface-color, $grey-light) !default;
+$background-color: var(--ds-background-color, $white) !default;
+$border-color: var(--ds-border-color, $grey) !default;
