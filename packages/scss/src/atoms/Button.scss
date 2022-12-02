@@ -1,11 +1,81 @@
 @import "./theme/foundation";
 
+@mixin active($color) {
+    outline: 0.4rem solid darken($color, 12);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 0.2rem solid $white;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
 .btn {
-    font-family: inherit;
-    background-color: $primary-color;
-    color: $text-primary-color;
-    padding: 0.5rem;
+    font-family: $inter;
+    font-size: $fs-lg;
+    font-weight: $fw-medium;
+    line-height: 1.2;
+    padding: 0.8rem 2rem;
     border: none;
     outline: none;
-    border-radius: 5rem;
+    cursor: pointer;
+    color: $text-primary-color;
+    background-color: $surface-color;
+    min-width: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_full_width {
+    width: 100%;
+}
+
+.btn_secondary {
+    background-color: $secondary-color;
+    color: $text-primary-inverted-color;
+    &:focus {
+        @include active($blue);
+    }
+    &:hover {
+        background-color: darken($blue, 5);
+    }
+}
+
+.btn_primary {
+    background-color: $primary-color;
+    color: $text-primary-inverted-color;
+    &:focus {
+        @include active($red);
+    }
+    &:hover {
+        background-color: darken($red, 5);
+    }
+}
+
+.btn_primary_active {
+    @include active($red);
+}
+
+.btn_secondary_active {
+    @include active($blue);
+}
+
+.btn_disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }

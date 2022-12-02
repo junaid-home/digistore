@@ -17,7 +17,9 @@ module.exports = {
       exclude: "node_modules/**",
     }),
     typescript({
-      typescript: require("typescript"),
+      tsconfigOverride: {
+        exclude: ["**/__tests__", "**/*.spec.ts", "**/*.spec.tsx"],
+      },
     }),
     postcss({
       plugins: [autoprefixer()],
