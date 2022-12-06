@@ -1,0 +1,78 @@
+@import "./theme/foundation";
+
+.base {
+    font-family: $inter;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: $text-primary-color;
+}
+
+.h1 {
+    font-size: 3.6rem;
+    font-family: $inter;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.h2 {
+    font-size: 2.6rem;
+    font-family: $inter;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.h3 {
+    font-size: 1.8rem;
+    font-family: $inter;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.body1 {
+    font-family: $inter;
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+.body2 {
+    font-family: $inter;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.body3 {
+    font-family: $inter;
+    font-size: 1.2rem;
+    line-height: 1.2;
+}
+
+.caption {
+    font-size: 1.2rem;
+    font-family: $inter;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.white {
+    color: $text-primary-inverted-color !important;
+}
+
+.grey {
+    color: $text-secondary-color !important;
+}
+
+.grey_light {
+    color: $text-secondary-light-color !important;
+}
+
+.grey_dark {
+    color: $text-secondary-dark-color !important;
+}
+
+.primary {
+    color: $primary-color !important;
+}
+
+.secondary {
+    color: $secondary-color !important;
+}

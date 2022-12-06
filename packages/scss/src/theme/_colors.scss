@@ -11,7 +11,8 @@ $text-primary-color: var(--ds-text-primary-color, $black) !default;
 $text-primary-inverted-color: var(--ds-text-primary-inverted-color, $white) !default;
 $text-secondary-color: var(--ds-text-secondary-color, $grey-medium) !default;
 $text-secondary-dark-color: var(--ds-text-secondary-dark-color, $grey-dark) !default;
+$text-secondary-light-color: var(--ds-text-secondary-light-color, $grey-light) !default;
 
 $surface-color: var(--ds-surface-color, $grey-light) !default;
 $background-color: var(--ds-background-color, $white) !default;
-$border-color: var(--ds-border-color, $grey) !default;
+$border-color: var(--ds-border-color, $grey-medium) !default;
