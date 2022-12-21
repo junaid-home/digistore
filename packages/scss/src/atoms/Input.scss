@@ -1,0 +1,19 @@
+@import "./theme/foundation";
+
+.input {
+    font-family: $inter;
+    font-size: $fs-md;
+    padding: 1rem;
+    color: $grey-dark;
+    border: 1px solid $grey-medium;
+    display: inline-block;
+    width: min-content;
+
+    &::placeholder {
+        color: $grey-dark;
+    }
+}
+
+.input_full_width {
+    width: 100%;
+}
