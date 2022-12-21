@@ -1,6 +1,10 @@
 import * as React from "react";
 
-export default function ({ color = "#A1A1A1" }) {
+interface Options {
+  color: string;
+}
+
+export default function ({ color = "#A1A1A1" }: Options) {
   return (
     <svg
       width="9"
