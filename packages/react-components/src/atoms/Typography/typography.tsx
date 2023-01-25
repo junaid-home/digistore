@@ -8,7 +8,7 @@ const Typography = React.forwardRef<
   HTMLHeadingElement | HTMLParagraphElement,
   TypographyOptions
 >((props, ref) => {
-  const { children, variant, color, ...other } = props;
+  const { children, variant, color, className = "", ...other } = props;
 
   const __getTypographyTag = React.useCallback(() => {
     if (variant === "h1") return "h1";
@@ -21,6 +21,7 @@ const Typography = React.forwardRef<
   const __typographyStyles = React.useMemo(() => {
     const classNames: string[] = [];
 
+    classNames.push(className);
     classNames.push(cls.base);
 
     if (variant === "h1") classNames.push(cls.h1);
@@ -39,7 +40,7 @@ const Typography = React.forwardRef<
     if (color === "secondary") classNames.push(cls.secondary);
 
     return classNames.join(" ");
-  }, [variant, color]);
+  }, [variant, color, className]);
 
   const Wrapper = __getTypographyTag();
 

@@ -5,6 +5,11 @@ export interface TypographyOptions {
    */
   children?: React.ReactNode;
   /**
+   * css class for styling text element.
+   * @type "string"
+   */
+  className?: string;
+  /**
    * The typography style.
    * @default "body1"
    */

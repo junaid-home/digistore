@@ -3,7 +3,10 @@ import cls from "@digistore/scss/lib/atoms/Input.module.css";
 import * as React from "react";
 import { InputOptions } from "./input-types";
 
-const Input = React.forwardRef<HTMLInputElement, InputOptions>((props, ref) => {
+const Input = React.forwardRef<
+  HTMLInputElement,
+  InputOptions & React.InputHTMLAttributes<HTMLInputElement>
+>((props, ref) => {
   const { className, fullWidth, ...other } = props;
 
   const __inputStyles = React.useMemo(() => {

@@ -3,19 +3,15 @@
 =============================================*/
 import { Button, Typography, Input } from "./atoms";
 
-/*=====  End of Atoms  ======*/
-
 /*=============================================
 =                    Molecules                =
 =============================================*/
-
-/*=====  End of Molecules  ======*/
+import { SearchBar, StackedText } from "./molecules";
 
 /*=============================================
 =                    Organisms                =
 =============================================*/
-
-/*=====  End of Organisms  ======*/
+import { TopBanner, Header } from "./organisms";
 
 /*=============================================
 =            Exporting All Components         =
@@ -27,7 +23,9 @@ export {
   Typography,
   Input,
   /*----------  Molecules  ----------*/
+  SearchBar,
+  StackedText,
   /*----------  Organisms  ----------*/
+  TopBanner,
+  Header,
 };
-
-/*=====  End of Exporting All Components  ======*/

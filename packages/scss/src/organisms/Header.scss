@@ -1,0 +1,30 @@
+@import "./theme/foundation";
+
+@mixin center {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.wrapper {
+    height: 9.5rem;
+    width: 100%;
+    background-color: $surface-color;
+}
+
+.sidebar {
+    max-width: 22.2rem;
+    @include center;
+}
+
+.main_area {
+    @include center;
+    border-bottom: 1px solid $border-color;
+}
+
+.right_align {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

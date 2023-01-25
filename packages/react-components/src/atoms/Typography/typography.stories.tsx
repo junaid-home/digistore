@@ -31,6 +31,11 @@ const controls = {
       "secondary",
     ],
   },
+  className: {
+    control: {
+      type: "text",
+    },
+  },
 };
 
 H1.args = {
