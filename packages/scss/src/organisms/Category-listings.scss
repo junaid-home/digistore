@@ -1,0 +1,40 @@
+@import "./theme/foundation";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.menu {
+    margin-right: 1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.label {
+    background-color: $primary-color;
+    width: 100%;
+}
+
+.item_container {
+    width: 100%;
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+}
+.item {
+    width: 100%;
+    padding: 1.15rem;
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rotate {
+    transform: rotate(-90deg);
+}

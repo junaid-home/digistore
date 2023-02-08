@@ -1,10 +1,20 @@
+import cls from "@digistore/scss/lib/pages/Home.module.css";
+
 import * as React from "react";
 
-import { Header, TopBanner } from "@digistore/react-components";
+import {
+  Header,
+  TopBanner,
+  CategoryListing,
+} from "@digistore/react-components";
 
 const categories = [
   { value: "all", label: "All Categories" },
   { value: "electronics", label: "Electronics" },
+  { value: "fashion", label: "Fashion" },
+  { value: "fashion", label: "Fashion" },
+  { value: "fashion", label: "Fashion" },
+  { value: "fashion", label: "Fashion" },
   { value: "fashion", label: "Fashion" },
 ];
 
@@ -20,7 +30,12 @@ export default function Home() {
         categories={categories}
         onSearchQuerySubmit={handleSearchSubmit}
       />
-      Hello World!
+      <div className="container center">
+        <div className={cls.sidebar}>
+          <CategoryListing categories={categories} />
+        </div>
+        <div className={cls.main_area}>asd</div>
+      </div>
     </div>
   );
 }
