@@ -21,8 +21,8 @@ const Typography = React.forwardRef<
   const __typographyStyles = React.useMemo(() => {
     const classNames: string[] = [];
 
-    classNames.push(className);
     classNames.push(cls.base);
+    classNames.push(className);
 
     if (variant === "h1") classNames.push(cls.h1);
     if (variant === "h2") classNames.push(cls.h2);

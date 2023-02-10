@@ -5,6 +5,10 @@ export interface ButtonOptions {
    */
   children?: React.ReactNode;
   /**
+   * css classes
+   */
+  className?: string;
+  /**
    * if true,the button will show a spinner
    */
   isLoading?: boolean;

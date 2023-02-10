@@ -11,7 +11,10 @@ import DropDown from "./dropdown";
 import { SearchBarOptions } from "./search-bar-types";
 
 function SearchBar({ categories, onSearchQuerySubmit }: SearchBarOptions) {
-  const [category, setCategory] = React.useState(categories[0]);
+  const [category, setCategory] = React.useState({
+    value: "all",
+    label: "All Categories",
+  });
   const [query, setQuery] = React.useState("");
 
   const handleSubmit: React.FormEventHandler = (e) => {

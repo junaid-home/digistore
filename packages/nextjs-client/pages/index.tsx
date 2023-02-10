@@ -2,6 +2,9 @@ import cls from "@digistore/scss/lib/pages/Home.module.css";
 
 import * as React from "react";
 
+import Links from "../containers/home/links";
+import Showcase from "../containers/home/showcase";
+
 import {
   Header,
   TopBanner,
@@ -9,12 +12,7 @@ import {
 } from "@digistore/react-components";
 
 const categories = [
-  { value: "all", label: "All Categories" },
   { value: "electronics", label: "Electronics" },
-  { value: "fashion", label: "Fashion" },
-  { value: "fashion", label: "Fashion" },
-  { value: "fashion", label: "Fashion" },
-  { value: "fashion", label: "Fashion" },
   { value: "fashion", label: "Fashion" },
 ];
 
@@ -34,7 +32,10 @@ export default function Home() {
         <div className={cls.sidebar}>
           <CategoryListing categories={categories} />
         </div>
-        <div className={cls.main_area}>asd</div>
+        <div className={cls.main_area}>
+          <Links />
+          <Showcase />
+        </div>
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonOptions>(
       type = "button",
       color,
       fullWidth,
+      className = "",
       ...other
     } = props;
 
@@ -25,6 +26,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonOptions>(
       classNames.push(cls.btn);
       fullWidth && classNames.push(cls.btn_full_width);
       isDisabled && classNames.push(cls.btn_disabled);
+
+      classNames.push(className);
+
       color === "primary" && classNames.push(cls.btn_primary);
       color === "secondary" && classNames.push(cls.btn_secondary);
       if (color === "primary" && isActive)
