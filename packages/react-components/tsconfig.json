@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src", "../nextjs-client/containers/home/hight-light"],
   "exclude": ["node_modules", "lib"],
   "compilerOptions": {
     "plugins": [{ "name": "typescript-plugin-css-modules" }],

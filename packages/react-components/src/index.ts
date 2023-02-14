@@ -11,7 +11,7 @@ import { SearchBar, StackedText } from "./molecules";
 /*=============================================
 =                    Organisms                =
 =============================================*/
-import { TopBanner, Header, CategoryListing } from "./organisms";
+import { TopBanner, Header, CategoryListing, HighLight } from "./organisms";
 
 /*=============================================
 =            Exporting All Components         =
@@ -28,5 +28,6 @@ export {
   /*----------  Organisms  ----------*/
   TopBanner,
   Header,
+  HighLight,
   CategoryListing,
 };

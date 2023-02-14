@@ -1,4 +1,4 @@
-import "react-lazy-load-image-component/src/effects/blur.css";
+import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import cls from "@digistore/scss/lib/pages/Home.module.css";
 
 import * as React from "react";

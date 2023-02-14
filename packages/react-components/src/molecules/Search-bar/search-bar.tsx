@@ -12,6 +12,7 @@ import { SearchBarOptions } from "./search-bar-types";
 
 function SearchBar({ categories, onSearchQuerySubmit }: SearchBarOptions) {
   const [category, setCategory] = React.useState({
+    id: "0",
     value: "all",
     label: "All Categories",
   });

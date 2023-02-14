@@ -8,6 +8,7 @@ import { MenuIcon, ArrowDownIcon } from "../../atoms/Icons";
 
 interface Options {
   categories: {
+    id: string;
     value: string;
     label: string;
   }[];
@@ -27,7 +28,7 @@ function CategoryListing({ categories }: Options) {
       </div>
       <div className={cls.item_container}>
         {categories.map((cat) => (
-          <div className={cls.item}>
+          <div className={cls.item} key={cat.id}>
             <Typography variant="body3" color="greyDark">
               {cat.label}
             </Typography>

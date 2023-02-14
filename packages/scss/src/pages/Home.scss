@@ -122,3 +122,26 @@
     align-items: center;
     padding-right: 1rem;
 }
+
+.highlights {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.highlight {
+    display: flex;
+    align-items: center;
+}
+
+.highlight_img img {
+    width: 5rem;
+    height: 5rem;
+    background-color: $primary-light-color;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 500px;
+
+    margin-right: 1.2rem;
+}
