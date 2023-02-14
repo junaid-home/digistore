@@ -6,12 +6,12 @@ import { Button, Typography, Input } from "./atoms";
 /*=============================================
 =                    Molecules                =
 =============================================*/
-import { SearchBar, StackedText } from "./molecules";
+import { SearchBar, StackedText, CardList } from "./molecules";
 
 /*=============================================
 =                    Organisms                =
 =============================================*/
-import { TopBanner, Header, CategoryListing, HighLight } from "./organisms";
+import { TopBanner, Header, CategoryListing } from "./organisms";
 
 /*=============================================
 =            Exporting All Components         =
@@ -25,9 +25,9 @@ export {
   /*----------  Molecules  ----------*/
   SearchBar,
   StackedText,
+  CardList,
   /*----------  Organisms  ----------*/
   TopBanner,
   Header,
-  HighLight,
   CategoryListing,
 };

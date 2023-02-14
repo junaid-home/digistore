@@ -10,6 +10,7 @@ import {
   Header,
   TopBanner,
   CategoryListing,
+  CardList,
 } from "@digistore/react-components";
 
 const categories = [
@@ -77,6 +78,9 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <CardList title="Flash Sale" endComponent={<h5>COunter</h5>}>
+        Hello WOrld
+      </CardList>
     </div>
   );
 }
