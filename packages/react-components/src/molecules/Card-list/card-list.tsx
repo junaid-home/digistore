@@ -10,7 +10,7 @@ function CardList({ children, title, endComponent }: CardListOptions) {
         <Typography variant="h3">{title}</Typography>
         {endComponent}
       </div>
-      <div className="tm-lg">{children}</div>
+      <div className="tm-lg grid">{children}</div>
     </div>
   );
 }

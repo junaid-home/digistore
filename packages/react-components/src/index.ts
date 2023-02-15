@@ -11,7 +11,7 @@ import { SearchBar, StackedText, CardList } from "./molecules";
 /*=============================================
 =                    Organisms                =
 =============================================*/
-import { TopBanner, Header, CategoryListing } from "./organisms";
+import { TopBanner, Header, CategoryListing, Card } from "./organisms";
 
 /*=============================================
 =            Exporting All Components         =
@@ -30,4 +30,5 @@ export {
   TopBanner,
   Header,
   CategoryListing,
+  Card,
 };

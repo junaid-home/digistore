@@ -1,0 +1,11 @@
+@import "./theme/foundation";
+
+.wrapper {
+    background-color: $grey-light;
+    padding: 1.2rem;
+    height: 31rem;
+}
+
+.line_through {
+    text-decoration: line-through;
+}

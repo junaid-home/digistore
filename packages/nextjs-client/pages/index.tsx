@@ -5,12 +5,14 @@ import * as React from "react";
 import Links from "../containers/home/links";
 import Showcase from "../containers/home/showcase";
 import HighLight from "../containers/home/hight-light";
+import CountDown from "../containers/home/countdown";
 
 import {
   Header,
   TopBanner,
   CategoryListing,
   CardList,
+  Card,
 } from "@digistore/react-components";
 
 const categories = [
@@ -45,6 +47,16 @@ const highLights = [
   },
 ];
 
+const products = Array.from({ length: 5 }, (_, index) => ({
+  id: index + 1,
+  title: "New Infinite zero x Pro 2021, 128GB, 8GB, 108...",
+  imgSrc:
+    "https://www.lovethispic.com/uploaded_images/351095-Landscape-Of-Nature.jpg",
+  discountedPrice: "120PKR",
+  price: "230PKR",
+  ratings: 4.6,
+}));
+
 export default function Home() {
   const handleSearchSubmit = (query: string, category: string) => {
     console.log(query, category);
@@ -78,8 +90,23 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <CardList title="Flash Sale" endComponent={<h5>COunter</h5>}>
-        Hello WOrld
+      <CardList
+        title="Flash Sale"
+        endComponent={<CountDown date={Date.now() + 10000 * 500} />}
+      >
+        {products.map((prod) => (
+          <Card
+            key={prod.id}
+            title={prod.title}
+            discountedPrice={prod.discountedPrice}
+            price={prod.price}
+            ratings={prod.ratings}
+            imgSrc={prod.imgSrc}
+          />
+        ))}
+      </CardList>
+      <CardList title="Most Popular" endComponent={null}>
+        afd
       </CardList>
     </div>
   );
