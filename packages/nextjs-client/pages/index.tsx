@@ -9,10 +9,12 @@ import CountDown from "../containers/home/countdown";
 
 import {
   Header,
+  Footer,
   TopBanner,
   CategoryListing,
   CardList,
   Card,
+  Typography,
 } from "@digistore/react-components";
 
 const categories = [
@@ -63,7 +65,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <TopBanner headline="Up to 70% off the entire store!" />
       <Header
         categories={categories}
@@ -105,9 +107,65 @@ export default function Home() {
           />
         ))}
       </CardList>
-      <CardList title="Most Popular" endComponent={null}>
-        afd
+      <CardList
+        title="Most Popular"
+        endComponent={
+          <Typography color="greyDark" variant="body2">
+            Most Popular on our Platform
+          </Typography>
+        }
+      >
+        {products.map((prod) => (
+          <Card
+            key={prod.id}
+            title={prod.title}
+            discountedPrice={prod.discountedPrice}
+            price={prod.price}
+            ratings={prod.ratings}
+            imgSrc={prod.imgSrc}
+          />
+        ))}
+        {products.map((prod) => (
+          <Card
+            key={prod.id}
+            title={prod.title}
+            discountedPrice={prod.discountedPrice}
+            price={prod.price}
+            ratings={prod.ratings}
+            imgSrc={prod.imgSrc}
+          />
+        ))}
       </CardList>
-    </div>
+      <CardList
+        title="Just for You"
+        endComponent={
+          <Typography color="greyDark" variant="body2">
+            Top Recommendations for you
+          </Typography>
+        }
+      >
+        {products.map((prod) => (
+          <Card
+            key={prod.id}
+            title={prod.title}
+            discountedPrice={prod.discountedPrice}
+            price={prod.price}
+            ratings={prod.ratings}
+            imgSrc={prod.imgSrc}
+          />
+        ))}
+        {products.map((prod) => (
+          <Card
+            key={prod.id}
+            title={prod.title}
+            discountedPrice={prod.discountedPrice}
+            price={prod.price}
+            ratings={prod.ratings}
+            imgSrc={prod.imgSrc}
+          />
+        ))}
+      </CardList>
+      <Footer language={categories} />
+    </React.Fragment>
   );
 }

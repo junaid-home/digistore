@@ -1,0 +1,29 @@
+@import "./theme/foundation";
+
+.wrapper {
+    background-color: $grey-light;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 3.5rem 0;
+}
+
+.section {
+    flex: 1;
+}
+
+.flex {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.link {
+    text-decoration: underline;
+    margin-top: 1.4rem;
+    cursor: pointer;
+}
