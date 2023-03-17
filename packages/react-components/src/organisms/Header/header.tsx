@@ -8,11 +8,18 @@ import { SearchBar, StackedText, Avatar } from "../../molecules";
 
 import { HeaderOptions } from "./header-types";
 
-function Header({ categories, onSearchQuerySubmit }: HeaderOptions) {
+function Header({
+  categories,
+  sidebarBottomMargin = true,
+  onSearchQuerySubmit,
+}: HeaderOptions) {
   return (
     <div className={cls.wrapper}>
       <div className="container center">
-        <div className={cls.sidebar}>
+        <div
+          className={cls.sidebar}
+          style={sidebarBottomMargin ? { borderBottom: "1px solid #ddd" } : {}}
+        >
           <LogoIcon />
         </div>
         <div className={cls.main_area}>

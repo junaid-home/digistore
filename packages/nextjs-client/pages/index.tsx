@@ -8,14 +8,13 @@ import HighLight from "../containers/home/hight-light";
 import CountDown from "../containers/home/countdown";
 
 import {
-  Header,
-  Footer,
-  TopBanner,
   CategoryListing,
   CardList,
   Card,
   Typography,
 } from "@digistore/react-components";
+
+import Layout from "../components/layout";
 
 const categories = [
   { id: "1", value: "electronics", label: "Electronics" },
@@ -60,17 +59,8 @@ const products = Array.from({ length: 5 }, (_, index) => ({
 }));
 
 export default function Home() {
-  const handleSearchSubmit = (query: string, category: string) => {
-    console.log(query, category);
-  };
-
   return (
-    <React.Fragment>
-      <TopBanner headline="Up to 70% off the entire store!" />
-      <Header
-        categories={categories}
-        onSearchQuerySubmit={handleSearchSubmit}
-      />
+    <Layout headerSidebarBorder>
       <div className="container center">
         <div className={cls.sidebar}>
           <CategoryListing categories={categories} />
@@ -165,7 +155,6 @@ export default function Home() {
           />
         ))}
       </CardList>
-      <Footer language={categories} />
-    </React.Fragment>
+    </Layout>
   );
 }
