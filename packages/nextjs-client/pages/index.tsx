@@ -60,8 +60,8 @@ const products = Array.from({ length: 5 }, (_, index) => ({
 
 export default function Home() {
   return (
-    <Layout headerSidebarBorder>
-      <div className="container center">
+    <Layout>
+      <main className={cls.main}>
         <div className={cls.sidebar}>
           <CategoryListing categories={categories} />
         </div>
@@ -69,7 +69,7 @@ export default function Home() {
           <Links />
           <Showcase />
         </div>
-      </div>
+      </main>
       <div className="container">
         <div className={cls.highlights}>
           {highLights.map((highLight) => (
@@ -82,79 +82,81 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <CardList
-        title="Flash Sale"
-        endComponent={<CountDown date={Date.now() + 10000 * 500} />}
-      >
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-      </CardList>
-      <CardList
-        title="Most Popular"
-        endComponent={
-          <Typography color="greyDark" variant="body2">
-            Most Popular on our Platform
-          </Typography>
-        }
-      >
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-      </CardList>
-      <CardList
-        title="Just for You"
-        endComponent={
-          <Typography color="greyDark" variant="body2">
-            Top Recommendations for you
-          </Typography>
-        }
-      >
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-      </CardList>
+      <div className="bm-xl">
+        <CardList
+          title="Flash Sale"
+          endComponent={<CountDown date={Date.now() + 10000 * 500} />}
+        >
+          {products.map((prod) => (
+            <Card
+              key={prod.id}
+              title={prod.title}
+              discountedPrice={prod.discountedPrice}
+              price={prod.price}
+              ratings={prod.ratings}
+              imgSrc={prod.imgSrc}
+            />
+          ))}
+        </CardList>
+        <CardList
+          title="Most Popular"
+          endComponent={
+            <Typography color="greyDark" variant="body2">
+              Most Popular on our Platform
+            </Typography>
+          }
+        >
+          {products.map((prod) => (
+            <Card
+              key={prod.id}
+              title={prod.title}
+              discountedPrice={prod.discountedPrice}
+              price={prod.price}
+              ratings={prod.ratings}
+              imgSrc={prod.imgSrc}
+            />
+          ))}
+          {products.map((prod) => (
+            <Card
+              key={prod.id}
+              title={prod.title}
+              discountedPrice={prod.discountedPrice}
+              price={prod.price}
+              ratings={prod.ratings}
+              imgSrc={prod.imgSrc}
+            />
+          ))}
+        </CardList>
+        <CardList
+          title="Just for You"
+          endComponent={
+            <Typography color="greyDark" variant="body2">
+              Top Recommendations for you
+            </Typography>
+          }
+        >
+          {products.map((prod) => (
+            <Card
+              key={prod.id}
+              title={prod.title}
+              discountedPrice={prod.discountedPrice}
+              price={prod.price}
+              ratings={prod.ratings}
+              imgSrc={prod.imgSrc}
+            />
+          ))}
+          {products.map((prod) => (
+            <Card
+              key={prod.id}
+              title={prod.title}
+              discountedPrice={prod.discountedPrice}
+              price={prod.price}
+              ratings={prod.ratings}
+              imgSrc={prod.imgSrc}
+            />
+          ))}
+        </CardList>
+      </div>
     </Layout>
   );
 }

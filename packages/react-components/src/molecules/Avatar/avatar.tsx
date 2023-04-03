@@ -6,9 +6,9 @@ import { UserIcon } from "../../atoms/Icons";
 
 import StackedText from "../Stacked-text/stacked-text";
 
-function Avatar({ user }: { user?: object }) {
+function Avatar({ user, onClick }: { user?: object; onClick: () => void }) {
   return (
-    <div className={cls.wrapper}>
+    <div className={cls.wrapper} onClick={onClick}>
       <UserIcon />
       <StackedText className="lm-sm" label="Sign In" value="Account" />
     </div>

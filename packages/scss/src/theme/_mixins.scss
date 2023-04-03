@@ -4,21 +4,70 @@
 
 /*----------  Media Query Helpers  ----------*/
 
+$breakpoints: (
+  sm: 45rem,
+  md: 68rem,
+);
+
 @mixin phone {
-  @media (min-width: map-get($breakpoints, "sm")) {
+  @media only screen and (max-width: map-get($breakpoints, "sm")) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (min-width: map-get($breakpoints, "md")) {
+  @media only screen and (max-width: map-get($breakpoints, "md")) {
     @content;
   }
 }
 
-@mixin desktop {
-  @media (min-width: map-get($breakpoints, "lg")) {
-    @content;
+/*----------  Margin Utility Class Generators  ----------*/
+
+$sizes: (
+  xsm: 0.4rem,
+  sm: 0.8rem,
+  md: 1.2rem,
+  lg: 1.8rem,
+  xl: 3.2rem,
+);
+
+@mixin margins {
+  @each $size, $value in $sizes {
+    &-#{$size} {
+      margin: $value;
+    }
+  }
+}
+
+@mixin left-margins {
+  @each $size, $value in $sizes {
+    &m-#{$size} {
+      margin-left: $value;
+    }
+  }
+}
+
+@mixin right-margins {
+  @each $size, $value in $sizes {
+    &m-#{$size} {
+      margin-right: $value;
+    }
+  }
+}
+
+@mixin top-margins {
+  @each $size, $value in $sizes {
+    &m-#{$size} {
+      margin-top: $value;
+    }
+  }
+}
+
+@mixin bottom-margins {
+  @each $size, $value in $sizes {
+    &m-#{$size} {
+      margin-bottom: $value;
+    }
   }
 }
 

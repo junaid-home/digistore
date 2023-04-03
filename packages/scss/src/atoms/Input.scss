@@ -1,8 +1,8 @@
 @import "./theme/foundation";
 
 .input {
-    font-family: $inter;
-    font-size: $fs-md;
+    font-family: inherit;
+    font-size: 500;
     padding: 1rem;
     color: $grey-dark;
     border: 1px solid $grey-medium;

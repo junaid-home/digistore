@@ -1,7 +1,7 @@
 @import "./theme/foundation";
 
 .base {
-    font-family: $inter;
+    font-family: inherit;
     font-size: 1.6rem;
     font-weight: 400;
     color: $text-primary-color;
@@ -9,46 +9,46 @@
 
 .h1 {
     font-size: 3.6rem;
-    font-family: $inter;
+    font-family: inherit;
     font-weight: 800;
     line-height: 1.3;
 }
 
 .h2 {
     font-size: 2.6rem;
-    font-family: $inter;
+    font-family: inherit;
     font-weight: bold;
     line-height: 1.4;
 }
 
 .h3 {
     font-size: 1.8rem;
-    font-family: $inter;
+    font-family: inherit;
     font-weight: 600;
     line-height: 1.4;
 }
 
 .body1 {
-    font-family: $inter;
+    font-family: inherit;
     font-size: 1.8rem;
     line-height: 1.2;
 }
 
 .body2 {
-    font-family: $inter;
+    font-family: inherit;
     font-size: 1.4rem;
     line-height: 1.2;
 }
 
 .body3 {
-    font-family: $inter;
+    font-family: inherit;
     font-size: 1.2rem;
     line-height: 1.2;
 }
 
 .caption {
     font-size: 1.2rem;
-    font-family: $inter;
+    font-family: inherit;
     text-transform: uppercase;
     line-height: 1.2;
 }

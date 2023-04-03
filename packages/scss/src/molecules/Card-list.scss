@@ -1,0 +1,22 @@
+@import "./theme/foundation";
+
+.text_container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 2rem;
+
+    @include tablet {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @include phone {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

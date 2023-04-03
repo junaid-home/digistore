@@ -14,14 +14,16 @@ import DropDown from "./drop-down";
 
 function Footer({
   language,
+  color = "white",
 }: {
   language: { value: string; label: string }[];
+  color?: string;
 }) {
   const [lang, setLang] = React.useState(language[0]);
 
   return (
-    <div className={cls.wrapper}>
-      <div className="container tm-xl">
+    <div className={cls.wrapper} style={{ background: color }}>
+      <div className="container">
         <div className={cls.container}>
           <div className={cls.section}>
             <LogoIcon />

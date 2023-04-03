@@ -1,0 +1,19 @@
+.quantity {
+    display: flex;
+    align-items: center;
+
+    &_text {
+        background: white;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    &_box {
+        background: white;
+        display: inline-block;
+        padding: 5px;
+        width: 35px;
+        text-align: center;
+        border: 2px solid grey;
+    }
+}

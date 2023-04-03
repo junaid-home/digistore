@@ -21,18 +21,18 @@ function TopBanner({ headline }: { headline: string }) {
   const [currency, setCurrency] = React.useState(currencyOpts[0]);
   const [lang, setLang] = React.useState(langOpts[0]);
 
-  console.log(lang, currency);
-
   return (
     <div className={cls.wrapper}>
       <div className="container center">
-        <div className={cls.center_align}>
+        <div className="center-vertical">
           <ShopIcon />
-          <Typography className="lm-sm" variant="body2" color="greyDark">
-            {headline}
-          </Typography>
+          <span className={cls.headline}>
+            <Typography className="lm-sm" variant="body2" color="greyDark">
+              {headline}
+            </Typography>
+          </span>
         </div>
-        <div className={cls.center_align}>
+        <div className="center-vertical">
           <DropDown
             placeholder="English"
             options={langOpts}

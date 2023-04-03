@@ -2,6 +2,7 @@
 
 .wrapper {
     background-color: $grey-light;
+    padding: 0 1rem;
 }
 
 .container {
@@ -10,10 +11,24 @@
     width: 100%;
     height: 100%;
     padding: 3.5rem 0;
+
+    @include tablet {
+        flex-direction: column;
+    }
 }
 
 .section {
     flex: 1;
+
+    @include tablet {
+        padding: 0 2rem;
+        margin-bottom: 2rem;
+
+        &:nth-child(3) {
+            order: 1;
+            margin-bottom: 8rem;
+        }
+    }
 }
 
 .flex {

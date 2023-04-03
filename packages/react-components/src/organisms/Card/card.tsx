@@ -19,15 +19,13 @@ function Card({ discountedPrice, imgSrc, price, ratings, title }: CardOptions) {
         effect="black-and-white"
         placeholderSrc="/thumbnail.png"
       />
-      <Typography className="tm-sm">
-        <LinesEllipsis
-          text={title}
-          maxLine="2"
-          ellipsis="..."
-          trimRight
-          basedOn="letters"
-        />
-      </Typography>
+      <LinesEllipsis
+        text={title}
+        maxLine="2"
+        ellipsis="..."
+        trimRight
+        basedOn="letters"
+      />
       <Typography variant="h3" color="primary" className="tm-sm">
         {discountedPrice}
       </Typography>

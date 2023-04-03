@@ -1,9 +1,7 @@
-/*=============================================
-=            Global CSS Styles                =
-=============================================*/
-
-/*----------  Inter Google Font  ----------*/
-
+/**
+*   The Inter Google font. We'll use this throughout our application.
+*       https://fonts.google.com/specimen/Inter
+*/
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap");
 
 /*----------  Theme  ----------*/
@@ -11,33 +9,59 @@
 @import "./theme/foundation";
 
 /*----------  Base Styling & Reset  ----------*/
-:root {
-  font-size: 62.5%; /*  make "1rem" = "10px" for better understanding of relation b/w "rem" & "px" units. */
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  user-select: none;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%; /*  make "1rem" = "10px" for better understanding of relation b/w "rem" & "px" units. */
   box-sizing: border-box;
+
+  @include tablet {
+    font-size: 56%;
+  }
 }
 
 body {
-  font-family: $inter;
-  font-size: $fs-md;
-  font-weight: $fw-regular;
+  font-family: "Inter", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 400;
   color: $text-primary-color;
-  box-sizing: border-box;
 }
+
+/*----------  Generating Margin Utility Classes  ----------*/
+
+.m {
+  @include margins;
+}
+.l {
+  @include left-margins;
+}
+.r {
+  @include right-margins;
+}
+.t {
+  @include top-margins;
+}
+.b {
+  @include bottom-margins;
+}
+
+/*----------  Global CSS Classes  ----------*/
 
 .container {
   max-width: 120rem;
   width: 100%;
   height: 100%;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 0 1rem;
   margin: auto;
 }
 
@@ -51,108 +75,19 @@ body {
 
 .center-vertical {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
-/*==== Margin ====*/
-.m-3 {
-  margin: 3rem;
-}
-.m-2 {
-  margin: 2rem;
-}
-.m-xl {
-  margin: 3.2rem;
-}
-.m-lg {
-  margin: 1.8rem;
-}
-.m-md {
-  margin: 1.2rem;
-}
-.m-sm {
-  margin: 0.8rem;
-}
-.m-xsm {
-  margin: 0.4rem;
+.bold {
+  font-weight: 500 !important;
 }
 
-// Left
-.lm-3 {
-  margin-left: 3rem;
-}
-.lm-2 {
-  margin-left: 2rem;
-}
-.lm-xl {
-  margin-left: 3.2rem;
-}
-.lm-lg {
-  margin-left: 1.8rem;
-}
-.lm-md {
-  margin-left: 1.2rem;
-}
-.lm-sm {
-  margin-left: 0.8rem;
-}
-.lm-xsm {
-  margin-left: 0.4rem;
-}
+// @library "react-best-tabs" styles overwrite
+.model-tabs {
+  border-bottom: none !important;
+  justify-content: center;
 
-// Right
-.rm-3 {
-  margin-right: 3rem;
-}
-.rm-2 {
-  margin-right: 2rem;
-}
-.rm-xl {
-  margin-right: 3.2rem;
-}
-.rm-lg {
-  margin-right: 1.8rem;
-}
-.rm-md {
-  margin-right: 1.2rem;
-}
-.rm-sm {
-  margin-right: 0.8rem;
-}
-.rm-xsm {
-  margin-right: 0.4rem;
-}
-
-// Top
-.tm-3 {
-  margin-top: 3rem;
-}
-.tm-2 {
-  margin-top: 2rem;
-}
-.tm-xl {
-  margin-top: 3.2rem;
-}
-.tm-lg {
-  margin-top: 1.8rem;
-}
-.tm-md {
-  margin-top: 1.2rem;
-}
-.tm-sm {
-  margin-top: 0.8rem;
-}
-.tm-xsm {
-  margin-top: 0.4rem;
-}
-
-/*==== End of Margin ====*/
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 2rem;
+  @include tablet {
+    justify-content: center !important;
+  }
 }

@@ -6,10 +6,17 @@
     display: flex;
     align-items: center;
     background-color: $grey-light;
+    padding: 0 1rem;
 }
 
 .center_align {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+.headline {
+    @include phone {
+        display: none;
+    }
 }

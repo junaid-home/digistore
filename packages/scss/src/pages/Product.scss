@@ -1,0 +1,71 @@
+@import "./theme/foundation";
+
+.showcase {
+    display: flex;
+
+    @include tablet {
+        flex-direction: column;
+    }
+}
+
+.carousel {
+    flex: 1;
+    margin-top: 2rem;
+}
+
+.details {
+    margin-top: 2rem;
+    flex: 1;
+    background: white;
+    height: 510px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.icons {
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+
+    &_like {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+    }
+}
+
+.grey {
+    color: $grey-dark;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+}
+
+.size_box {
+    background: white;
+    display: inline-block;
+    padding: 5px;
+    width: 35px;
+    text-align: center;
+    margin-right: 0.8rem;
+    margin-top: 0.8rem;
+}
+
+.cto_buttons {
+    display: flex;
+    margin-top: 4rem;
+}
+
+.description {
+    background: white;
+    padding: 2rem;
+    line-height: 1.75;
+}

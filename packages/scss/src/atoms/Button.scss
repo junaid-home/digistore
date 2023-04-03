@@ -25,9 +25,9 @@
 }
 
 .btn {
-    font-family: $inter;
-    font-size: $fs-lg;
-    font-weight: $fw-medium;
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 500;
     line-height: 1.2;
     padding: 0.8rem 2rem;
     border: none;
@@ -38,6 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #ddd;
 }
 
 .btn_full_width {
@@ -47,6 +48,8 @@
 .btn_secondary {
     background-color: $secondary-color;
     color: $text-primary-inverted-color;
+    border: none;
+
     &:focus {
         @include active($blue);
     }
@@ -58,6 +61,8 @@
 .btn_primary {
     background-color: $primary-color;
     color: $text-primary-inverted-color;
+    border: none;
+
     &:focus {
         @include active($red);
     }
