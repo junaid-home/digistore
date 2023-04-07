@@ -1,35 +1,35 @@
-import cls from "@digistore/scss/lib/molecules/Search-bar.module.css";
+import cls from '@digistore/scss/lib/molecules/Search-bar.module.css'
 
-import * as React from "react";
+import * as React from 'react'
 
-import { SearchIcon } from "../../atoms/Icons";
+import {SearchIcon} from '../../atoms/Icons'
 
-import { Button, Input } from "../../atoms";
+import {Button, Input} from '../../atoms'
 
-import DropDown from "./dropdown";
+import DropDown from './dropdown'
 
-import { SearchBarOptions } from "./search-bar-types";
+import {SearchBarOptions} from './search-bar-types'
 
-function SearchBar({ categories, onSearchQuerySubmit }: SearchBarOptions) {
+function SearchBar({categories, onSearchQuerySubmit}: SearchBarOptions) {
   const [category, setCategory] = React.useState({
-    id: "0",
-    value: "all",
-    label: "All Categories",
-  });
-  const [query, setQuery] = React.useState("");
+    id: '0',
+    value: 'all',
+    label: 'All Categories',
+  })
+  const [query, setQuery] = React.useState('')
 
-  const handleSubmit: React.FormEventHandler = (e) => {
-    e.preventDefault();
+  const handleSubmit: React.FormEventHandler = e => {
+    e.preventDefault()
 
-    onSearchQuerySubmit(query, category.value);
-  };
+    onSearchQuerySubmit && onSearchQuerySubmit(query, category.value)
+  }
 
   return (
     <form className={cls.wrapper} onSubmit={handleSubmit}>
       <Input
         placeholder="Search for Products..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={e => setQuery(e.target.value)}
       />
       <DropDown
         placeholder="English"
@@ -41,7 +41,7 @@ function SearchBar({ categories, onSearchQuerySubmit }: SearchBarOptions) {
         <SearchIcon color="white" />
       </Button>
     </form>
-  );
+  )
 }
 
-export default SearchBar;
+export default SearchBar

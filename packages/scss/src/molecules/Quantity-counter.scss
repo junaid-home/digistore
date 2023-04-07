@@ -6,6 +6,8 @@
         background: white;
         display: inline-block;
         padding: 5px;
+        width: 35px;
+        text-align: center;
     }
 
     &_box {
@@ -15,5 +17,6 @@
         width: 35px;
         text-align: center;
         border: 2px solid grey;
+        cursor: pointer;
     }
 }

@@ -11,13 +11,14 @@ import {
   StackedText,
   CardList,
   PaymentCard,
-  QuantitySelector,
+  QuantityCounter,
+  Selector,
 } from './molecules'
 
 /*=============================================
 =                    Organisms                =
 =============================================*/
-import {TopBanner, Header, CategoryListing, Card, Footer} from './organisms'
+import {TopBanner, Header, Card, Footer} from './organisms'
 
 /*=============================================
 =            Exporting All Components         =
@@ -34,12 +35,12 @@ export {
   SearchBar,
   StackedText,
   CardList,
-  QuantitySelector,
+  QuantityCounter,
+  Selector,
   /*----------  Organisms  ----------*/
   TopBanner,
   Header,
   Footer,
-  CategoryListing,
   Card,
   PaymentCard,
 }

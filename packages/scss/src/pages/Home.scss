@@ -34,7 +34,7 @@
     }
 }
 
-.tabs {
+.links {
     width: 100%;
     display: flex;
     align-items: center;
@@ -51,6 +51,14 @@
 
         &:not(:last-child) {
             margin-right: 3.8rem;
+        }
+
+        &:last-child p {
+            color: $secondary-color;
+        }
+
+        &:hover p {
+            color: $primary-color;
         }
     }
 }
@@ -80,65 +88,129 @@
         justify-content: space-between;
         margin-left: 2rem;
     }
-}
 
-.showcase__primary_card {
-    width: 100%;
-    display: flex;
-    background-color: $grey-light;
-    padding: 3.2rem;
-    align-items: center;
-
-    &__content {
-        flex: 0.5 !important;
-    }
-
-    &__image {
-        display: flex;
-        flex: 0.5 !important;
-        justify-content: center;
-    }
-}
-
-.showcase__secondary_card {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    padding: 2rem;
-
-    &:first-child {
-        margin-bottom: 1rem;
-    }
-
-    &:last-child {
-        margin-top: 1rem;
-    }
-
-    &__content {
-        flex: 0.5 !important;
-
+    &_categories {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-    }
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
 
-    &__price {
-        display: flex;
-        align-items: center;
-        margin-top: 0.4rem;
+        &_menu {
+            margin-right: 1rem;
+            width: 1.4rem;
+        }
 
-        & > p:last-child {
-            margin-left: 1rem;
-            text-decoration: line-through;
+        &_label {
+            background-color: $primary-color;
+            width: 100%;
+        }
+
+        &_items {
+            width: 100%;
+            padding-left: 1.8rem;
+            padding-right: 1.8rem;
+
+            & a {
+                text-decoration: none;
+            }
+        }
+
+        &_item {
+            width: 100%;
+            padding: 1.15rem;
+            padding-left: 0;
+            padding-right: 0;
+            border-bottom: 1px solid $border-color;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &_arrow {
+                transform: rotate(-90deg);
+            }
+
+            &:hover p {
+                color: $primary-color !important;
+            }
         }
     }
 
-    &__image {
+    &__primary_card {
+        width: 100%;
         display: flex;
-        flex: 0.5 !important;
-        justify-content: flex-end;
+        background-color: $grey-light;
+        padding: 3.2rem;
         align-items: center;
-        padding-right: 1rem;
+
+        &__content {
+            flex: 0.5 !important;
+
+            & a {
+                text-decoration: none;
+
+                &:hover h1 {
+                    color: $secondary-color;
+                }
+            }
+        }
+
+        &__image {
+            display: flex;
+            flex: 0.5 !important;
+            justify-content: center;
+        }
+    }
+
+    &__secondary_card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        padding: 2rem;
+
+        &:first-child {
+            margin-bottom: 1rem;
+        }
+
+        &:last-child {
+            margin-top: 1rem;
+        }
+
+        &__content {
+            flex: 0.5 !important;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            & a {
+                text-decoration: none;
+
+                &:hover h3 {
+                    color: $secondary-color;
+                }
+            }
+        }
+
+        &__price {
+            display: flex;
+            align-items: center;
+            margin-top: 0.4rem;
+
+            & > p:last-child {
+                margin-left: 1rem;
+                text-decoration: line-through;
+            }
+        }
+
+        &__image {
+            display: flex;
+            flex: 0.5 !important;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 1rem;
+        }
     }
 }
 

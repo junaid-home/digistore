@@ -3,8 +3,10 @@ import cls from "@digistore/scss/lib/templates/Layout.module.css";
 import * as React from "react";
 
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { Header, Footer, TopBanner } from "@digistore/react-components";
+import { useQueryParams, StringParam } from "use-query-params";
 
 import AuthModel from "../auth-model";
 import CartModel from "../cart-model";
@@ -14,20 +16,18 @@ const categories = [
   { id: "2", value: "fashion", label: "Fashion" },
 ];
 
-function Layout({
-  children,
-  fullBorder,
-  color = "white",
-}: {
-  children: React.ReactNode;
-  fullBorder?: boolean;
-  color?: "white" | "grey";
-}) {
+function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
+  const [params, setParams] = useQueryParams({
+    query: StringParam,
+    category: StringParam,
+  });
   const [openAuthModel, setOpenAuthModel] = React.useState(false);
   const [openCartModel, setOpenCartModel] = React.useState(false);
 
+  const router = useRouter();
+
   const handleSearchSubmit = (query: string, category: string) => {
-    console.log(query, category);
+    setParams({ query, category });
   };
 
   return (
@@ -46,6 +46,8 @@ function Layout({
         fullBorder={fullBorder}
         onAccountClick={() => setOpenAuthModel((prev) => !prev)}
         onCartClick={() => setOpenCartModel((prev) => !prev)}
+        onLogoClick={() => router.push("/")}
+        onLikesClick={() => router.push("/likes")}
       />
       <div className={cls.content_container}>
         <div className="container">{children}</div>
@@ -58,6 +60,12 @@ function Layout({
       <CartModel open={openCartModel} onClose={() => setOpenCartModel(false)} />
     </React.Fragment>
   );
+}
+
+interface LayoutOptions {
+  children: React.ReactNode;
+  fullBorder?: boolean;
+  color?: "white" | "grey";
 }
 
 export default Layout;

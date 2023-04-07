@@ -7,7 +7,7 @@ import {CardListOptions} from './card-list-types'
 
 function CardList({children, title, endComponent}: CardListOptions) {
   return (
-    <div className="container">
+    <section className="container">
       {(title || endComponent) && (
         <div className="center tm-xl">
           <span className={cls.text_container}>
@@ -19,7 +19,7 @@ function CardList({children, title, endComponent}: CardListOptions) {
       <div className={title && 'tm-lg'}>
         <div className={cls.grid}>{children}</div>
       </div>
-    </div>
+    </section>
   )
 }
 

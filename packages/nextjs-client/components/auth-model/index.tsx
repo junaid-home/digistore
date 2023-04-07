@@ -6,9 +6,13 @@ import Image from "next/image";
 
 import { Input, Button } from "@digistore/react-components";
 
-import Tabs from "react-best-tabs";
-import { Tab } from "react-best-tabs";
-import { Modal } from "react-responsive-modal";
+/**
+ * importing Tabs would print warning on the console
+ *
+ * https://github.com/MostafaRostami72/react-best-tabs/issues/4
+ */
+import Tabs, { Tab } from "react-best-tabs";
+import Modal from "react-responsive-modal";
 
 function SocialLinks() {
   return (
@@ -55,7 +59,7 @@ function AuthModel({ open, onClose }: { open: boolean; onClose: () => void }) {
         modal: { maxWidth: 350, width: "100%", outline: "solid" },
       }}
     >
-      <Tabs ulClassName="model-tabs">
+      <Tabs ulClassName="model-tabs" activeTab={1}>
         <Tab title="Sign In">
           <form className={cls.login_container}>
             <div className="tm-sm">

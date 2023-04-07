@@ -2,23 +2,30 @@ import cls from "@digistore/scss/lib/pages/Home.module.css";
 
 import * as React from "react";
 
+import Link from "next/link";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Button, Typography } from "@digistore/react-components";
 
-function PrimaryCard() {
+import { ProductType } from "../types";
+
+function PrimaryCard({ product }: { product: ProductType }) {
   return (
     <div className={cls.showcase__primary_card}>
       <div className={cls.showcase__primary_card__content}>
         <Typography variant="caption" color="primary">
           NEW YEAR SALE UPTO 10%
         </Typography>
-        <Typography variant="h1" className="tm-sm">
-          New Macbook Pro 2022
-        </Typography>
+        <Link
+          href={`/product/${product.id}`}
+          className={cls.showcase__primary_card__content_link}
+        >
+          <Typography variant="h1" className="tm-sm">
+            {product.title}
+          </Typography>
+        </Link>
         <Typography variant="body3" color="greyDark" className="tm-sm">
-          MacBook Pro 14” and 16” laptops feature incredible performance with
-          the M1 Pro or M1 Max chip, amazing battery life, and a Liquid Retina
-          XDR display.
+          {product.summary}
         </Typography>
         <Button className="tm-lg" color="secondary">
           SHOP NOW
@@ -26,8 +33,8 @@ function PrimaryCard() {
       </div>
       <div className={cls.showcase__primary_card__image}>
         <LazyLoadImage
-          src={"/thumbnail.png"}
-          alt="Product Image"
+          src={product.imgSrc}
+          alt={product.title}
           width={245}
           height={180}
           style={{ backgroundSize: "cover", backgroundRepeat: "no-repeat" }}

@@ -12,22 +12,30 @@ const user = {
 };
 
 function Profile() {
-  const [name, setName] = React.useState(user.name);
-  const [email, setEmail] = React.useState(user.email);
-  const [city, setCity] = React.useState(user.city);
-  const [address, setAddress] = React.useState(user.address);
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    city: "",
+    address: "",
+  });
+
+  const handleUpdateProfile: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <SidebarWithLinksLayout>
-      <form>
+      <form onSubmit={handleUpdateProfile}>
         <div className="bm-sm">
           <Label htmlFor="name">Name</Label>
           <Input
             id="name"
             fullWidth
             placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.name}
+            onChange={(e) =>
+              setFormData((data) => ({ ...data, name: e.target.value }))
+            }
           />
         </div>
         <div className="bm-sm">
@@ -36,8 +44,10 @@ function Profile() {
             id="Email"
             fullWidth
             placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) =>
+              setFormData((data) => ({ ...data, email: e.target.value }))
+            }
           />
         </div>
         <div className="bm-sm">
@@ -46,8 +56,10 @@ function Profile() {
             id="city"
             fullWidth
             placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={formData.city}
+            onChange={(e) =>
+              setFormData((data) => ({ ...data, city: e.target.value }))
+            }
           />
         </div>
         <div className="bm-sm">
@@ -56,8 +68,10 @@ function Profile() {
             id="address"
             fullWidth
             placeholder="Residential Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={formData.address}
+            onChange={(e) =>
+              setFormData((data) => ({ ...data, address: e.target.value }))
+            }
           />
         </div>
         <div className="tm-md">

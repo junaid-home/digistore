@@ -2,20 +2,17 @@ import cls from "@digistore/scss/lib/pages/Product.module.css";
 
 import * as React from "react";
 
-import Image from "next/image";
-
 import SanitizedHtml from "react-sanitized-html";
-import StarRatingComponent from "react-star-rating-component";
-import { Carousel } from "react-responsive-carousel";
 import {
   Button,
-  QuantitySelector,
+  QuantityCounter,
   Typography,
+  Selector,
 } from "@digistore/react-components";
 
 import Layout from "../../components/layout";
-
-import { icons } from "@digistore/react-components";
+import ProductGallery from "../../containers/product/gallery";
+import IconsView from "../../containers/product/icons-view";
 
 const product = {
   title:
@@ -37,92 +34,45 @@ const product = {
 `,
 };
 
-const { LikeIcon } = icons;
-
 function ProductDetails() {
-  const [showCarouselThumbs, setShowThumbs] = React.useState(false);
   const [isLiked, setIsLiked] = React.useState(false);
-
-  React.useEffect(() => {
-    setShowThumbs(false);
-    if (typeof window !== undefined && window.innerWidth > 1087) {
-      setShowThumbs(true);
-    }
-  }, []);
+  const [size, setSize] = React.useState("large");
+  const [color, setColor] = React.useState("blue");
+  const [quantity, setQuantity] = React.useState(1);
 
   return (
     <Layout color="grey" fullBorder>
       <div className="container">
         <div className={cls.showcase}>
-          <div className={cls.carousel}>
-            <Carousel
-              autoPlay
-              swipeable
-              infiniteLoop
-              emulateTouch
-              showArrows={!showCarouselThumbs}
-              showThumbs={showCarouselThumbs}
-              renderThumbs={() =>
-                product.thumbnails.map((thumb) => (
-                  <Image alt="image" width={80} height={40} src={thumb} />
-                ))
-              }
-            >
-              {product.thumbnails.map((thumb) => (
-                <img alt="Thumbnail" src={thumb} />
-              ))}
-            </Carousel>
-          </div>
+          <ProductGallery thumbnails={product.thumbnails} />
           <div className={cls.details}>
             <div>
               <Typography variant="h3">{product.title}</Typography>
-              <div className={cls.icons}>
-                <StarRatingComponent
-                  name={"Ratings"}
-                  value={product.ratings}
-                  starCount={5}
-                  editing={false}
-                />
-                <div
-                  className={cls.icons_like}
-                  onClick={() => setIsLiked((prev) => !prev)}
-                >
-                  <LikeIcon filled={isLiked} />
-                </div>
+              <IconsView
+                isLiked={isLiked}
+                onLikeClick={() => setIsLiked((p) => !p)}
+                ratings={product.ratings}
+              />
+              <div className="tm-xl">
+                <Selector value={size} onChange={setSize} title="Size">
+                  <Selector.Option value="large">L</Selector.Option>
+                  <Selector.Option value="small">S</Selector.Option>
+                </Selector>
               </div>
               <div className="tm-xl">
-                <Typography variant="body2">
-                  Size: <span className={cls.grey}>M</span>
-                </Typography>
-                {product.sizes.map((size) => (
-                  <span
-                    style={{ border: "2px solid #dc2626" }}
-                    className={cls.size_box}
-                  >
-                    <Typography variant="body3">{size}</Typography>
-                  </span>
-                ))}
-              </div>
-              <div className="tm-xl">
-                <Typography variant="body2">
-                  Color: <span className={cls.grey}>Grey</span>
-                </Typography>
-                {product.colors.map((color) => (
-                  <span
-                    style={{
-                      background: color,
-                      border: "2px solid #dc2626",
-                    }}
-                    className={cls.size_box}
-                  >
-                    <Typography variant="body3">&nbsp;</Typography>
-                  </span>
-                ))}
+                <Selector value={color} onChange={setColor} title="Color">
+                  <Selector.Option type="color" value="orange">
+                    &nbsp;
+                  </Selector.Option>
+                  <Selector.Option type="color" value="blue">
+                    &nbsp;
+                  </Selector.Option>
+                </Selector>
               </div>
               <div className="tm-xl">
                 <Typography variant="body2">Quantity:</Typography>
                 <div className="tm-sm">
-                  <QuantitySelector />
+                  <QuantityCounter count={quantity} onChange={setQuantity} />
                 </div>
               </div>
             </div>

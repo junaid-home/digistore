@@ -7,13 +7,15 @@ import Image from "next/image";
 import {
   Typography,
   Button,
-  QuantitySelector,
+  QuantityCounter,
 } from "@digistore/react-components";
 
 import LinesEllipsis from "react-lines-ellipsis";
-import { Modal } from "react-responsive-modal";
+import Modal from "react-responsive-modal";
 
 function CartItem() {
+  const [quantity, setQuantity] = React.useState(0);
+
   return (
     <div className={cls.cart_item}>
       <div className={cls.cart_item_desc}>
@@ -42,13 +44,13 @@ function CartItem() {
               </Typography>
             </div>
             <div className={cls.cart_item_mobile_quantity}>
-              <QuantitySelector />
+              <QuantityCounter count={quantity} onChange={setQuantity} />
             </div>
           </div>
         </div>
       </div>
       <div className={cls.cart_item_quantity}>
-        <QuantitySelector />
+        <QuantityCounter count={quantity} onChange={setQuantity} />
       </div>
       <div className={cls.cart_item_price}>
         <Typography color="primary" variant="h3">

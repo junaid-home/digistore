@@ -1,7 +1,15 @@
+export interface CategoryType {
+  id: string
+  value: string
+  label: string
+}
+
 export interface HeaderOptions {
-  categories: { value: string; label: string }[];
-  onSearchQuerySubmit: (value: string, category: string) => void;
-  onAccountClick: () => void;
-  onCartClick: () => void;
-  fullBorder?: boolean;
+  categories: CategoryType[]
+  onSearchQuerySubmit?: (value: string, category: string) => void
+  onAccountClick?: () => void
+  onCartClick?: () => void
+  onLogoClick?: () => void
+  onLikesClick?: () => void
+  fullBorder?: boolean
 }

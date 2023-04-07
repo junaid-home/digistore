@@ -6,7 +6,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { Typography } from "@digistore/react-components";
 
-function HighLight({
+function HighLightItem({
   title,
   desc,
   imgSrc,
@@ -37,4 +37,4 @@ function HighLight({
   );
 }
 
-export default HighLight;
+export default HighLightItem;

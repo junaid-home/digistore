@@ -4,8 +4,31 @@
     background-color: $grey-light;
     padding: 1.2rem;
     height: 31rem;
+
+    @include tablet {
+        & span {
+            height: 15.7rem !important;
+        }
+        & span img {
+            height: 15.7rem !important;
+        }
+    }
 }
 
 .line_through {
     text-decoration: line-through;
+}
+
+.content_area {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover .text_container {
+        color: $secondary-color !important;
+    }
+}
+
+.text_container {
+    margin-top: 2rem;
+    margin-bottom: 0.4rem;
 }

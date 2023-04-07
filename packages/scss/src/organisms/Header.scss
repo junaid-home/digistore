@@ -105,6 +105,10 @@
 
     &_input {
         border-right: none;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     &_close_icon {

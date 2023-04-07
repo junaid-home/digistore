@@ -91,3 +91,19 @@ body {
     justify-content: center !important;
   }
 }
+/*----------  End  ----------*/
+
+// @library "react-select" styles overwrite
+#select > div {
+  box-shadow: none !important;
+  border-color: #ddd;
+  width: 100%;
+}
+
+#react-select-select-listbox {
+  min-width: 8rem;
+  border: 1px solid #ddd;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+/*----------  End  ----------*/

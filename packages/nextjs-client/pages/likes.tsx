@@ -7,10 +7,9 @@ import { Card, CardList } from "@digistore/react-components";
 const products = Array.from({ length: 5 }, (_, index) => ({
   id: index + 1,
   title: "New Infinite zero x Pro 2021, 128GB, 8GB, 108...",
-  imgSrc:
-    "https://www.lovethispic.com/uploaded_images/351095-Landscape-Of-Nature.jpg",
-  discountedPrice: "120PKR",
-  price: "230PKR",
+  imgSrc: "/assets/product.jpg",
+  discountedPrice: 120,
+  price: 230,
   ratings: 4.6,
 }));
 

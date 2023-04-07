@@ -22,18 +22,33 @@ function Header({
   onSearchQuerySubmit,
   onAccountClick,
   onCartClick,
+  onLogoClick,
+  onLikesClick,
 }: HeaderOptions) {
   const [mobileSearch, setMobileSearch] = React.useState(false)
+  const [searchQuery, setSearchQuery] = React.useState('')
+
+  const handleMobileSearchSubmission: React.FormEventHandler<HTMLFormElement> =
+    e => {
+      e.preventDefault()
+
+      onSearchQuerySubmit && onSearchQuerySubmit(searchQuery, 'all')
+    }
 
   return (
     <header className={cls.wrapper} style={!fullBorder ? {border: 'none'} : {}}>
       {mobileSearch ? (
         <div className={cls.mobile_search}>
-          <form className={cls.mobile_search_form}>
+          <form
+            onSubmit={handleMobileSearchSubmission}
+            className={cls.mobile_search_form}
+          >
             <Input
-              className={cls.mobile_search_input}
               fullWidth
               placeholder="Search for Products..."
+              className={cls.mobile_search_input}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
             />
             <CloseIcon
               onClick={() => setMobileSearch(false)}
@@ -44,7 +59,7 @@ function Header({
       ) : (
         <div className="container center">
           <div className={cls.sidebar}>
-            <LogoIcon />
+            <LogoIcon onClick={onLogoClick} />
           </div>
           <div
             className={cls.main_area}
@@ -63,7 +78,11 @@ function Header({
                 totalCount={12}
                 className="lm-xl"
               />
-              <LikeIcon totalCount={9} className="lm-xl" />
+              <LikeIcon
+                onClick={onLikesClick}
+                totalCount={9}
+                className="lm-xl"
+              />
               <StackedText className="lm-xl" label="Total" value="1000PKR" />
             </nav>
             <div className={cls.search_cto}>
@@ -82,7 +101,7 @@ function Header({
       )}
       <nav className={cls.mobile_nav}>
         <CartIcon onClick={onCartClick} totalCount={12} />
-        <LikeIcon totalCount={9} />
+        <LikeIcon onClick={onLikesClick} totalCount={9} />
         <StackedText label="Total" value="1000PKR" />
       </nav>
     </header>

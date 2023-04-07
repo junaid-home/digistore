@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from 'react'
 
-import Select, { OptionsOrGroups, GroupBase, ActionMeta } from "react-select";
+import Select, {OptionsOrGroups, GroupBase} from 'react-select'
 
 interface PropTypes {
-  options: OptionsOrGroups<unknown, GroupBase<unknown>>;
-  placeholder: string;
-  className?: string;
-  defaultValue: any;
-  onChange: any;
+  options: OptionsOrGroups<unknown, GroupBase<unknown>>
+  placeholder: string
+  className?: string
+  defaultValue: any
+  onChange: any
 }
 
 function DropDown({
@@ -27,48 +27,48 @@ function DropDown({
       id="select"
       instanceId="select"
       styles={{
-        placeholder: (base) => ({
+        placeholder: base => ({
           ...base,
-          fontSize: "1.2rem",
-          color: "#A3A3A3",
+          fontSize: '1.2rem',
+          color: '#A3A3A3',
         }),
-        control: (base) => ({
+        control: base => ({
           ...base,
-          minHeight: "none",
-          background: "transparent",
-          border: "none",
-          height: "100%",
+          minHeight: 'none',
+          background: 'transparent',
+          border: 'none',
+          height: '100%',
           borderRadius: 0,
-          borderTop: "1px solid #d9d9d9",
-          borderBottom: "1px solid #d9d9d9",
-          padding: "0 1rem",
+          borderTop: '1px solid #d9d9d9',
+          borderBottom: '1px solid #d9d9d9',
+          padding: '0 1rem',
         }),
-        indicatorsContainer: (base) => ({
+        indicatorsContainer: base => ({
           ...base,
-          "& span": { display: "none" },
-          "& div": { padding: 0 },
-          "& div svg": { height: 15 },
+          '& span': {display: 'none'},
+          '& div': {padding: 0},
+          '& div svg': {height: 15},
         }),
-        valueContainer: (base) => ({ ...base, padding: 0 }),
-        singleValue: (base) => ({
+        valueContainer: base => ({...base, padding: 0}),
+        singleValue: base => ({
           ...base,
-          fontSize: "1.2rem",
-          color: "#A3A3A3",
-          outline: "none",
+          fontSize: '1.2rem',
+          color: '#A3A3A3',
+          outline: 'none',
         }),
-        option: (base) => ({
+        option: base => ({
           ...base,
-          fontSize: "1.2rem",
+          fontSize: '1.2rem',
         }),
-        menu: (base) => ({
+        menu: base => ({
           ...base,
-          width: "auto",
-          overflow: "hidden",
+          width: 'auto',
+          overflow: 'hidden',
           borderRadius: 0,
         }),
       }}
     />
-  );
+  )
 }
 
-export default DropDown;
+export default DropDown

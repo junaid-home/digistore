@@ -47,6 +47,11 @@
             &_item {
                 margin-top: 0.4rem;
                 display: block;
+                cursor: pointer;
+
+                &:hover p {
+                    color: $secondary-color;
+                }
             }
         }
     }
