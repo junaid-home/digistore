@@ -1,10 +1,13 @@
 import * as React from "react";
 
-import { SidebarWithLinksLayout } from "../components/layout";
-
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { Card, CardList } from "@digistore/react-components";
 
-const products = Array.from({ length: 5 }, (_, index) => ({
+import { SidebarWithLinksLayout } from "../components/layout";
+import { selectAuthState } from "../store/auth-slice";
+
+const productsTemp = Array.from({ length: 5 }, (_, index) => ({
   id: index + 1,
   title: "New Infinite zero x Pro 2021, 128GB, 8GB, 108...",
   imgSrc: "/assets/product.jpg",
@@ -13,7 +16,15 @@ const products = Array.from({ length: 5 }, (_, index) => ({
   ratings: 4.6,
 }));
 
-function Likes() {
+function Likes({ products }: { products: typeof productsTemp }) {
+  const router = useRouter();
+
+  const { isAuthenticated } = useSelector(selectAuthState);
+  if (!isAuthenticated) {
+    router.replace("/");
+    return;
+  }
+
   return (
     <SidebarWithLinksLayout>
       <CardList>
@@ -31,5 +42,13 @@ function Likes() {
     </SidebarWithLinksLayout>
   );
 }
+
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      products: productsTemp,
+    },
+  };
+};
 
 export default Likes;

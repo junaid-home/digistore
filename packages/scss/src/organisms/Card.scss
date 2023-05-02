@@ -4,6 +4,7 @@
     background-color: $grey-light;
     padding: 1.2rem;
     height: 31rem;
+    overflow: hidden;
 
     @include tablet {
         & span {

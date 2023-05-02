@@ -1,3 +1,5 @@
+import cls from "@digistore/scss/lib/pages/Home.module.css";
+
 import * as React from "react";
 
 import { useRouter } from "next/router";
@@ -18,9 +20,7 @@ const categories = [
 ];
 
 const products = Array.from({ length: 5 }, (_, index) => ({
-  id: JSON.stringify(
-    Math.random() * 100 + ((Math.random() * 100) / Math.random()) * 100
-  ),
+  id: JSON.stringify(index + 1),
   title: "New Macbook Pro 2022",
   summary: `MacBook Pro 14” and 16” laptops feature incredible performance with
   the M1 Pro or M1 Max chip, amazing battery life, and a Liquid Retina
@@ -32,23 +32,21 @@ const products = Array.from({ length: 5 }, (_, index) => ({
   ratings: 4.6,
 }));
 
-const LoadingGrid = () => {
+const LoadingCards = () => {
   return (
-    <div className="tm-lg">
-      <CardList>
-        {products.map((prod) => (
-          <Card
-            loading
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
-      </CardList>
-    </div>
+    <React.Fragment>
+      {products.map((prod) => (
+        <Card
+          loading
+          key={prod.id}
+          title={prod.title}
+          discountedPrice={prod.discountedPrice}
+          price={prod.price}
+          ratings={prod.ratings}
+          imgSrc={prod.imgSrc}
+        />
+      ))}
+    </React.Fragment>
   );
 };
 
@@ -126,37 +124,39 @@ function Home() {
             />
           ))}
         </CardList>
+        <CardList
+          title="Just for You"
+          endComponent={
+            <Typography color="greyDark" variant="body2">
+              Top Recommendations for you
+            </Typography>
+          }
+        >
+          &nbsp;
+        </CardList>
         <InfiniteScroll
           dataLength={items.length}
           next={loadMore}
           hasMore={hasNextPage}
-          loader={<LoadingGrid />}
+          loader={<LoadingCards />}
+          className={cls.grid}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>Yay! You have seen it all</b>
             </p>
           }
         >
-          <CardList
-            title="Just for You"
-            endComponent={
-              <Typography color="greyDark" variant="body2">
-                Top Recommendations for you
-              </Typography>
-            }
-          >
-            {items.map((item) => (
-              <Card
-                key={item.id}
-                title={item.title}
-                discountedPrice={item.discountedPrice}
-                price={item.price}
-                ratings={item.ratings}
-                imgSrc={item.imgSrc}
-                onContentClick={() => router.push(`/product/${item.slug}`)}
-              />
-            ))}
-          </CardList>
+          {items.map((item) => (
+            <Card
+              key={item.id}
+              title={item.title}
+              discountedPrice={item.discountedPrice}
+              price={item.price}
+              ratings={item.ratings}
+              imgSrc={item.imgSrc}
+              onContentClick={() => router.push(`/product/${item.slug}`)}
+            />
+          ))}
         </InfiniteScroll>
       </div>
     </Layout>

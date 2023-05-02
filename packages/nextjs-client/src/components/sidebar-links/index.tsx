@@ -4,17 +4,26 @@ import * as React from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Typography } from "@digistore/react-components";
 
+import { signOut } from "../../store/auth-slice";
+import { wrapper } from "../../store";
+
 function SidebarLinks() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const links = [
     { pathName: "My Profile", href: "/profile" },
     { pathName: "My Favorites", href: "/likes" },
     { pathName: "My Orders", href: "/orders" },
   ];
+
+  const handleLogOut = () => {
+    dispatch(signOut(null));
+  };
 
   return (
     <div className={cls.links}>
@@ -33,6 +42,11 @@ function SidebarLinks() {
           </Link>
         );
       })}
+      <div onClick={handleLogOut} className={`${cls.links_item}`}>
+        <Typography className="bold" variant="body2">
+          SignOut
+        </Typography>
+      </div>
     </div>
   );
 }

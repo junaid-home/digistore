@@ -10,6 +10,8 @@ import { useQueryParams, StringParam } from "use-query-params";
 
 import AuthModel from "../auth-model";
 import CartModel from "../cart-model";
+import { useSelector } from "react-redux";
+import { selectAuthState } from "../../store/auth-slice";
 
 const categories = [
   { id: "1", value: "electronics", label: "Electronics" },
@@ -17,6 +19,9 @@ const categories = [
 ];
 
 function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
+  const router = useRouter();
+  const { isAuthenticated } = useSelector(selectAuthState);
+
   const [params, setParams] = useQueryParams({
     query: StringParam,
     category: StringParam,
@@ -24,10 +29,16 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
   const [openAuthModel, setOpenAuthModel] = React.useState(false);
   const [openCartModel, setOpenCartModel] = React.useState(false);
 
-  const router = useRouter();
-
   const handleSearchSubmit = (query: string, category: string) => {
     setParams({ query, category });
+  };
+
+  const handleAccountClick = () => {
+    if (isAuthenticated) {
+      router.push("/profile");
+    } else {
+      setOpenAuthModel(true);
+    }
   };
 
   return (
@@ -44,7 +55,7 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         categories={categories}
         onSearchQuerySubmit={handleSearchSubmit}
         fullBorder={fullBorder}
-        onAccountClick={() => setOpenAuthModel((prev) => !prev)}
+        onAccountClick={handleAccountClick}
         onCartClick={() => setOpenCartModel((prev) => !prev)}
         onLogoClick={() => router.push("/")}
         onLikesClick={() => router.push("/likes")}
@@ -56,7 +67,7 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         language={categories}
         color={color === "white" ? "#f3f3f3" : "white"}
       />
-      <AuthModel open={openAuthModel} onClose={() => setOpenAuthModel(false)} />
+      <AuthModel open={openAuthModel} setOpen={setOpenAuthModel} />
       <CartModel open={openCartModel} onClose={() => setOpenCartModel(false)} />
     </React.Fragment>
   );

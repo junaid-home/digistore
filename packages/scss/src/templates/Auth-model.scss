@@ -8,9 +8,38 @@
     padding-bottom: 1rem;
 }
 
-.social_icons {
+.social_login {
+    display: block;
+
+    & button {
+        margin-top: 1rem !important;
+    }
+}
+.separator {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 10;
+    width: 100%;
+    margin: 0.5rem 0;
+
+    & div {
+        flex: 1;
+        display: block;
+        height: 1px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    & span {
+        display: inline-block;
+        margin: 0 1rem;
+    }
+}
+
+.social_button {
+    & div {
+        justify-content: center;
+
+        & div:last-child {
+            width: auto !important;
+        }
+    }
 }

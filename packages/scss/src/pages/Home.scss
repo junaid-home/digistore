@@ -34,6 +34,10 @@
     }
 }
 
+.grid {
+    @include grid;
+}
+
 .links {
     width: 100%;
     display: flex;
