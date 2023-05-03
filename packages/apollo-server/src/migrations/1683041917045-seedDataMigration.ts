@@ -11,7 +11,7 @@ import Product from "../models/Product";
 
 import { Products, Categories, Colors, Promotions, Sizes } from "./seedData";
 
-function randomIntFromInterval(min, max) {
+function randomNumberGenerator(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -49,8 +49,9 @@ export class SeedData1683041917045 implements MigrationInterface {
       product.selling_price = p.selling_price;
       product.ratings = p.ratings;
 
-      product.category = categories[randomIntFromInterval(0, 4)];
-      product.promotion = promotions[randomIntFromInterval(0, 1)];
+      product.category = categories[p.category_index];
+      product.promotion =
+        promotions[randomNumberGenerator(0, promotions.length - 1)];
       product.colors = colors;
       product.sizes = sizes;
       product.gallery = galley;

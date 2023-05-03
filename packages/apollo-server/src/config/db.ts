@@ -14,7 +14,7 @@ import Category from "../models/Category";
 import Image from "../models/Image";
 import Product from "../models/Product";
 
-import { SeedData1683041917045 } from "../migrations/1683041917045-seedData";
+import { SeedData1683041917045 } from "../migrations/1683041917045-seedDataMigration";
 
 const dataSource = new DataSource({
   type: "postgres",
