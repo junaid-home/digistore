@@ -5,12 +5,24 @@ import schema from "./graphql";
 
 import dataProvider from "./config/db";
 
+import { decodeToken } from "./helpers/jwt";
+
 const server = new ApolloServer({
   schema,
 });
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
+  context: async ({ req, res }) => {
+    const token = req.headers.authorization || "";
+
+    const isAuthenticated = Boolean(decodeToken(token)?.id);
+
+    let user;
+    if (isAuthenticated) user = decodeToken(token);
+
+    return { isAuthenticated, user };
+  },
 });
 console.log(`🚀 [ SERVER ] running at: ${url}`);
 

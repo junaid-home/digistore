@@ -29,9 +29,18 @@ export const typeDefs = `#graphql
     residential_address: String!
   }
 
+  input UserUpdate {
+    name: String!
+    phone: String!
+    city: String!
+    postal_code: Int!
+    residential_address: String!
+  }
+
   extend type Mutation {
     login(credentials: Credentials!): UserAuthResponse!
     createUser(user: NewUser!): UserAuthResponse!
+    updateUser(user: UserUpdate!): UserUpdateResponse!
   }
 
   type SafeUser {
@@ -63,6 +72,12 @@ export const typeDefs = `#graphql
   type UserAuthSuccessData {
     token: String
     user: SafeUser
+  }
+
+  type UserUpdateResponse implements Response {
+    code: Int!
+    status: String!
+    message: String!
   }
 `;
 
@@ -188,6 +203,35 @@ export const resolvers = {
         });
       } catch (err) {
         return responseSerializer(500, err.message);
+      }
+    },
+
+    async updateUser(_parent, args, context, _info) {
+      try {
+        const userRepository = dataSource.getRepository(User);
+        const addressRepository = dataSource.getRepository(Address);
+
+        if (!context.isAuthenticated || !context.user)
+          return responseSerializer(401, "Invalid Authentication Token!");
+
+        const user = await userRepository.findOneBy({ id: context.user.id });
+        user.name = args.user.name;
+        user.phone = args.user.phone;
+
+        await userRepository.save(user);
+
+        const address = await addressRepository.findOneBy({
+          user: { id: context.user.id },
+        });
+        address.city = args.user.city;
+        address.residential_address = args.user.residential_address;
+        address.postal_code = args.user.postal_code;
+
+        await addressRepository.save(address);
+
+        return responseSerializer(200, "Success");
+      } catch (err) {
+        return responseSerializer(500, "Failed To Update Profile!");
       }
     },
   },

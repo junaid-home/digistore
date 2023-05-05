@@ -1,10 +1,11 @@
+import { ILike, Between } from "typeorm";
+
 import dataSource from "../config/db";
 
 import responseSerializer from "../helpers/response-serializer";
-import Category from "../models/Category";
 
+import Category from "../models/Category";
 import Product from "../models/Product";
-import Promotion from "../models/Promotion";
 
 export const typeDefs = `#graphql
     type Promotion {
@@ -63,6 +64,7 @@ export const typeDefs = `#graphql
         category: Category!
         sizes: [Size!]
         colors: [Color!]
+        thumbnail: String
         gallery: [Image!]
         created_at: String!
         updated_at: String!
@@ -70,17 +72,30 @@ export const typeDefs = `#graphql
 
     input Filter {
         promotion: String!
+        skip: Int
+        limit: Int
+    }
+
+    input SearchFilter {
+      query: String!
+      min_price: Float
+      max_price: Float
+      skip: Int
+      limit: Int
     }
 
     extend type Query {
+        product(id: String!): GetProductResponse!
         products(filters: Filter!): GetProductsResponse!
         categories: GetCategoriesResponse!
+        search(filters: SearchFilter!): GetProductsResponse!
     }
 
     type GetProductsResponse implements Response {
         code: Int!
         status: String!
         message: String
+        hasNextPage: Boolean
         data: [Product!]
     }
 
@@ -90,7 +105,22 @@ export const typeDefs = `#graphql
         message: String
         data: [Category!]
     }
+
+    type GetProductResponse implements Response {
+        code: Int!
+        status: String!
+        message: String
+        data: Product
+    }
 `;
+
+const productRelations = [
+  "category",
+  "promotion",
+  "sizes",
+  "colors",
+  "gallery",
+];
 
 export const resolvers = {
   Query: {
@@ -98,22 +128,42 @@ export const resolvers = {
       const productRepository = dataSource.getRepository(Product);
 
       try {
-        let products;
+        const skip = parseInt(args.filters.skip) || 0;
+        const limit = parseInt(args.filters.limit) || 10;
 
+        const totalProductsCount = await productRepository.count();
+
+        let products;
         if (args.filters.promotion) {
-          products = await productRepository.find({
+          const fetchedProducts = await productRepository.find({
             where: {
               promotion: { name: args.filters.promotion },
             },
-            relations: ["category", "promotion", "sizes", "colors", "gallery"],
+            relations: productRelations,
+            skip,
+            take: limit,
           });
+
+          products = fetchedProducts.map((product) => ({
+            ...product,
+            thumbnail: product?.gallery[0]?.source,
+          }));
         } else {
-          products = await productRepository.find({
-            relations: ["category", "promotion", "sizes", "colors", "gallery"],
+          const fetchedProducts = await productRepository.find({
+            relations: productRelations,
+            skip,
+            take: limit,
           });
+
+          products = fetchedProducts.map((product) => ({
+            ...product,
+            thumbnail: product?.gallery[0]?.source,
+          }));
         }
 
-        return responseSerializer(200, products);
+        return responseSerializer(200, products, {
+          hasNextPage: totalProductsCount > limit + skip,
+        });
       } catch (err) {
         return responseSerializer(500, err.message);
       }
@@ -125,6 +175,66 @@ export const resolvers = {
         const categories = await categoryRepository.find({});
 
         return responseSerializer(200, categories);
+      } catch (err) {
+        return responseSerializer(500, err.message);
+      }
+    },
+    async product(_parent, args, _contextValue, _info) {
+      const productRepository = dataSource.getRepository(Product);
+
+      try {
+        const product = await productRepository.findOne({
+          where: { id: args.id },
+          relations: productRelations,
+        });
+        if (!product)
+          return responseSerializer(
+            400,
+            `No product found with id: ${args.id}`
+          );
+
+        return responseSerializer(200, product);
+      } catch (err) {
+        return responseSerializer(500, err.message);
+      }
+    },
+    async search(_parent, args, _context, _info) {
+      const productRepository = dataSource.getRepository(Product);
+
+      const query = args.filters.query || "";
+      const min = args.filters.min_price || 0;
+      const max = args.filters.max_price || Infinity;
+      const skip = parseInt(args.filters.skip) || 0;
+      const limit = parseInt(args.filters.limit) || 10;
+
+      try {
+        const totalProductsCount = await productRepository.count({
+          where: {
+            name: ILike(`%${query}%`),
+            summary: ILike(`%${query}%`),
+            selling_price: Between(min, max),
+          },
+        });
+
+        const fetchedProducts = await productRepository.find({
+          where: {
+            name: ILike(`%${query}%`),
+            summary: ILike(`%${query}%`),
+            selling_price: Between(min, max),
+          },
+          relations: ["gallery"],
+          take: limit,
+          skip,
+        });
+
+        const products = fetchedProducts.map((product) => ({
+          ...product,
+          thumbnail: product?.gallery[0]?.source,
+        }));
+
+        return responseSerializer(200, products, {
+          hasNextPage: totalProductsCount > limit + skip,
+        });
       } catch (err) {
         return responseSerializer(500, err.message);
       }
