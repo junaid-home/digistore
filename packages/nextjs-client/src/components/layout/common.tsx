@@ -6,31 +6,29 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { Header, Footer, TopBanner } from "@digistore/react-components";
-import { useQueryParams, StringParam } from "use-query-params";
+import queryString from "querystring";
 
 import AuthModel from "../auth-model";
 import CartModel from "../cart-model";
 import { useSelector } from "react-redux";
 import { selectAuthState } from "../../store/auth-slice";
-
-const categories = [
-  { id: "1", value: "electronics", label: "Electronics" },
-  { id: "2", value: "fashion", label: "Fashion" },
-];
+import { selectCategoriesState } from "../../store/categories-slice";
 
 function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
   const router = useRouter();
   const { isAuthenticated } = useSelector(selectAuthState);
+  const { categories } = useSelector(selectCategoriesState);
 
-  const [params, setParams] = useQueryParams({
-    query: StringParam,
-    category: StringParam,
-  });
   const [openAuthModel, setOpenAuthModel] = React.useState(false);
   const [openCartModel, setOpenCartModel] = React.useState(false);
 
   const handleSearchSubmit = (query: string, category: string) => {
-    setParams({ query, category });
+    const searchQuery = queryString.stringify({
+      query,
+      category,
+    });
+
+    router.push(`/search?${searchQuery}`);
   };
 
   const handleAccountClick = () => {
@@ -64,7 +62,7 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         <div className="container">{children}</div>
       </div>
       <Footer
-        language={categories}
+        language={[{ label: "English", value: "eng" }]}
         color={color === "white" ? "#f3f3f3" : "white"}
       />
       <AuthModel open={openAuthModel} setOpen={setOpenAuthModel} />

@@ -3,6 +3,9 @@ import cls from "@digistore/scss/lib/pages/Product.module.css";
 import * as React from "react";
 
 import SanitizedHtml from "react-sanitized-html";
+import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
+import { useMutation } from "@apollo/client";
 import {
   Button,
   QuantityCounter,
@@ -14,59 +17,110 @@ import Layout from "../../components/layout";
 import ProductGallery from "../../containers/product/gallery";
 import IconsView from "../../containers/product/icons-view";
 
-const product = {
-  title:
-    "New Infinite zero x Pro 2021, 128GB, 8GB | 5000Mah Battery, Buy our Latest Mobile Phone",
-  thumbnails: [
-    "/assets/1.jpg",
-    "/assets/2.jpg",
-    "/assets/3.jpg",
-    "/assets/4.jpg",
-    "/assets/5.jpg",
-  ],
-  ratings: 4.8,
-  colors: ["red", "blue", "orange"],
-  sizes: ["S", "M"],
-  desc: `
-<h2>The importance of learning how to edit a blog post</h2>
-<p>Self editing is one of the most essential skills for bloggers to learn. You might want to hire an editor for your blog eventually, but in the early days, it’s a significant expense with no guaranteed return on investment. But you still need to be publishing quality, polished articles if you want your blog to look like a professional publication.</p>
-<p>Until you’re seeing major conversions from your blog and/or managing a team of writers, self editing is the most efficient and cost-effective way to ensure that quality and polish. That said, you will need to pick up a few skills – and some tools – to do it right.</p>
-`,
-};
+import { wrapper } from "../../store";
+import { selectAuthState, setUser } from "../../store/auth-slice";
 
-function ProductDetails() {
+import client from "../../graphql/client";
+import { GET_PRODUCT_WITH_SLUG } from "../../graphql/product";
+import { ADD_PRODUCT_TO_USER_LIKE } from "../../graphql/auth";
+
+function ProductDetails({ data }: { data: any }) {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { isAuthenticated, user, token } = useSelector(selectAuthState);
+
+  const [addLike] = useMutation(ADD_PRODUCT_TO_USER_LIKE);
+
   const [isLiked, setIsLiked] = React.useState(false);
   const [size, setSize] = React.useState("large");
   const [color, setColor] = React.useState("blue");
   const [quantity, setQuantity] = React.useState(1);
 
+  React.useEffect(() => {
+    data?.sizes?.length && setSize(data.sizes[0].name);
+    data?.colors?.length && setColor(data.colors[0].name);
+
+    if (isAuthenticated) {
+      user?.likes.map((prod) => {
+        if (prod.id === data.id) {
+          setIsLiked(true);
+        }
+      });
+    }
+  }, [user?.likes, isAuthenticated]);
+
+  const thumbnails = data?.gallery?.map((img: any) => img.source);
+
+  const oldLikes = user?.likes || [];
+
   return (
     <Layout color="grey" fullBorder>
       <div className="container">
         <div className={cls.showcase}>
-          <ProductGallery thumbnails={product.thumbnails} />
+          <ProductGallery thumbnails={thumbnails} />
           <div className={cls.details}>
             <div>
-              <Typography variant="h3">{product.title}</Typography>
+              <Typography variant="h3">{data.name}</Typography>
               <IconsView
                 isLiked={isLiked}
-                onLikeClick={() => setIsLiked((p) => !p)}
-                ratings={product.ratings}
+                onLikeClick={async () => {
+                  if (isAuthenticated && !isLiked) {
+                    const { data: results } = await addLike({
+                      variables: { productId: data.id },
+                      context: {
+                        headers: {
+                          authorization: token,
+                        },
+                      },
+                    });
+
+                    if (results.addLike.status === "success") {
+                      alert.success("Product is Added to Favorites");
+
+                      const newLike = {
+                        id: data.id,
+                        slug: data.slug,
+                        name: data.name,
+                        ratings: data.ratings,
+                        thumbnail: data.gallery[0].source,
+                        summary: data.summary,
+                        market_price: data.market_price,
+                        selling_price: data.selling_price,
+                      };
+
+                      dispatch(
+                        setUser({
+                          ...user,
+                          likes: [...oldLikes, newLike],
+                        })
+                      );
+                    }
+                  }
+                }}
+                ratings={data.ratings}
               />
               <div className="tm-xl">
                 <Selector value={size} onChange={setSize} title="Size">
-                  <Selector.Option value="large">L</Selector.Option>
-                  <Selector.Option value="small">S</Selector.Option>
+                  {data.sizes &&
+                    data.sizes.map((size: any) => (
+                      <Selector.Option key={size.id} value={size.name}>
+                        {size.name_brief}
+                      </Selector.Option>
+                    ))}
                 </Selector>
               </div>
               <div className="tm-xl">
                 <Selector value={color} onChange={setColor} title="Color">
-                  <Selector.Option type="color" value="orange">
-                    &nbsp;
-                  </Selector.Option>
-                  <Selector.Option type="color" value="blue">
-                    &nbsp;
-                  </Selector.Option>
+                  {data.colors &&
+                    data.colors.map((color: any) => (
+                      <Selector.Option
+                        key={color.id}
+                        type="color"
+                        value={color.name}
+                      >
+                        &nbsp;
+                      </Selector.Option>
+                    ))}
                 </Selector>
               </div>
               <div className="tm-xl">
@@ -87,11 +141,29 @@ function ProductDetails() {
           </div>
         </div>
         <div className={cls.description}>
-          <SanitizedHtml html={product.desc} />
+          <SanitizedHtml html={data.desc} />
         </div>
       </div>
     </Layout>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }): Promise<any> => {
+      const slug = req.url?.replace("/product/", "") || null;
+
+      const { data } = await client.query({
+        query: GET_PRODUCT_WITH_SLUG,
+        variables: { slug },
+      });
+
+      return {
+        props: {
+          data: data.product.data || {},
+        },
+      };
+    }
+);
 
 export default ProductDetails;

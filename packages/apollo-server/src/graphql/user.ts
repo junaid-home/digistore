@@ -12,6 +12,7 @@ import {
   newUserValidator,
   LoginCredentialsValidator,
 } from "../validators/user";
+import Product from "../models/Product";
 
 export const typeDefs = `#graphql
   input Credentials {
@@ -41,6 +42,18 @@ export const typeDefs = `#graphql
     login(credentials: Credentials!): UserAuthResponse!
     createUser(user: NewUser!): UserAuthResponse!
     updateUser(user: UserUpdate!): UserUpdateResponse!
+    addLike(productId: String!): UserUpdateResponse!
+  }
+
+  type Like {
+    id: String!
+    name: String!
+    slug: String!
+    summary: String!
+    market_price: Int!
+    selling_price: Int!
+    thumbnail: String!
+    ratings: Float!
   }
 
   type SafeUser {
@@ -48,6 +61,7 @@ export const typeDefs = `#graphql
     name: String!
     email: String!
     phone: String!
+    likes: [Like!]
     address: Address!
     created_at: String!
     updated_at: String!
@@ -101,11 +115,19 @@ export const resolvers = {
 
         const queriedUser = await userRepository.findOne({
           where: { email: user.email },
+          relations: ["likes", "likes.gallery"],
         });
         if (!queriedUser) {
           throw new Error(
             `User with email "${user.email}" don't exist, please signup!`
           );
+        }
+
+        if (queriedUser.likes.length) {
+          queriedUser.likes = queriedUser.likes.map((like) => ({
+            ...like,
+            thumbnail: like.gallery[0].source,
+          }));
         }
 
         const { password, salt } = queriedUser;
@@ -131,7 +153,7 @@ export const resolvers = {
           address: { ...queriedAddress },
         };
 
-        const token = generateToken(userWithPopulatedAddress);
+        const token = generateToken({ ...userWithPopulatedAddress, likes: [] });
 
         return responseSerializer(200, {
           token,
@@ -228,6 +250,37 @@ export const resolvers = {
         address.postal_code = args.user.postal_code;
 
         await addressRepository.save(address);
+
+        return responseSerializer(200, "Success");
+      } catch (err) {
+        return responseSerializer(500, "Failed To Update Profile!");
+      }
+    },
+
+    async addLike(_parent, args, context, _info) {
+      try {
+        const userRepository = dataSource.getRepository(User);
+        const productRepository = dataSource.getRepository(Product);
+
+        if (!context.isAuthenticated || !context.user)
+          return responseSerializer(401, "Invalid Authentication Token!");
+
+        const product = await productRepository.findOneBy({
+          id: args.productId,
+        });
+        if (!product)
+          return responseSerializer(
+            400,
+            `No Product found with id: ${args.productId}`
+          );
+
+        const user = await userRepository.findOne({
+          where: { id: context.user.id },
+          relations: ["likes"],
+        });
+        user.likes = [...user.likes, product];
+
+        await userRepository.save(user);
 
         return responseSerializer(200, "Success");
       } catch (err) {

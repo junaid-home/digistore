@@ -12,6 +12,7 @@ interface AuthState {
     phone: string;
     created_at: string;
     updated_at: string;
+    likes: any[];
     address: {
       id: string;
       postal_code: number;
@@ -43,6 +44,9 @@ export const authSlice = createSlice({
       state.token = null;
       state.user = null;
     },
+    setUser(state, action) {
+      state.user = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -54,7 +58,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuth, signOut } = authSlice.actions;
+export const { setAuth, signOut, setUser } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 

@@ -13,10 +13,15 @@ import {SearchBarOptions} from './search-bar-types'
 function SearchBar({categories, onSearchQuerySubmit}: SearchBarOptions) {
   const [category, setCategory] = React.useState({
     id: '0',
-    value: 'all',
+    value: '',
     label: 'All Categories',
   })
   const [query, setQuery] = React.useState('')
+
+  const categoryOpts = categories.map(cat => ({
+    label: cat.name,
+    value: cat.name,
+  }))
 
   const handleSubmit: React.FormEventHandler = e => {
     e.preventDefault()
@@ -33,7 +38,7 @@ function SearchBar({categories, onSearchQuerySubmit}: SearchBarOptions) {
       />
       <DropDown
         placeholder="English"
-        options={categories}
+        options={categoryOpts}
         defaultValue={category}
         onChange={setCategory}
       />

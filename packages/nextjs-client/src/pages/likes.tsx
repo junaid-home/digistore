@@ -2,24 +2,15 @@ import * as React from "react";
 
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Card, CardList } from "@digistore/react-components";
+import { Card, CardList, Typography } from "@digistore/react-components";
 
 import { SidebarWithLinksLayout } from "../components/layout";
 import { selectAuthState } from "../store/auth-slice";
 
-const productsTemp = Array.from({ length: 5 }, (_, index) => ({
-  id: index + 1,
-  title: "New Infinite zero x Pro 2021, 128GB, 8GB, 108...",
-  imgSrc: "/assets/product.jpg",
-  discountedPrice: 120,
-  price: 230,
-  ratings: 4.6,
-}));
-
-function Likes({ products }: { products: typeof productsTemp }) {
+function Likes() {
   const router = useRouter();
 
-  const { isAuthenticated } = useSelector(selectAuthState);
+  const { isAuthenticated, user } = useSelector(selectAuthState);
   if (!isAuthenticated) {
     router.replace("/");
     return;
@@ -28,27 +19,26 @@ function Likes({ products }: { products: typeof productsTemp }) {
   return (
     <SidebarWithLinksLayout>
       <CardList>
-        {products.map((prod) => (
-          <Card
-            key={prod.id}
-            title={prod.title}
-            discountedPrice={prod.discountedPrice}
-            price={prod.price}
-            ratings={prod.ratings}
-            imgSrc={prod.imgSrc}
-          />
-        ))}
+        {user?.likes.length ? (
+          user.likes.map((prod: any) => (
+            <Card
+              key={prod.id}
+              title={prod.name}
+              discountedPrice={prod.market_price}
+              price={prod.selling_price}
+              ratings={prod.ratings}
+              imgSrc={prod.thumbnail}
+              onContentClick={() => router.push(`/product/${prod.slug}`)}
+            />
+          ))
+        ) : (
+          <div className="center">
+            <Typography variant="h3">No Products are Liked!</Typography>
+          </div>
+        )}
       </CardList>
     </SidebarWithLinksLayout>
   );
 }
-
-export const getServerSideProps = async () => {
-  return {
-    props: {
-      products: productsTemp,
-    },
-  };
-};
 
 export default Likes;

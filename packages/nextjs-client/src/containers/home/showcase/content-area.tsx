@@ -8,22 +8,26 @@ import { Carousel } from "react-responsive-carousel";
 
 import PrimaryCard from "./primary-card";
 import SecondaryCard from "./secondary-card";
-import { ProductType } from "../types";
+import { ProductType } from "../../../pages";
 
 function ContentArea({ products }: { products: ProductType[] }) {
   const router = useRouter();
 
-  if (products.length < 3) {
-    throw new Error("There should be at least 3 products!.");
-  }
+  // if (products.length < 3) {
+  //   throw new Error("There should be at least 3 products!.");
+  // }
 
   return (
     <React.Fragment>
       <div className={cls.showcase}>
-        <PrimaryCard product={products[0]} />
+        {products.length > 0 && <PrimaryCard product={products[0]} />}
         <div>
-          <SecondaryCard product={products[1]} color="#D8E8FA" />
-          <SecondaryCard product={products[2]} color="#DFE3E4" />
+          {products.length > 1 && (
+            <SecondaryCard product={products[1]} color="#D8E8FA" />
+          )}
+          {products.length > 2 && (
+            <SecondaryCard product={products[2]} color="#DFE3E4" />
+          )}
         </div>
       </div>
       <div className={cls.carousel}>
@@ -39,7 +43,7 @@ function ContentArea({ products }: { products: ProductType[] }) {
         >
           {products.map((product) => (
             <div key={product.id}>
-              <img alt="Thumbnail" src={product.imgSrc} />
+              <img alt="Thumbnail" src={product.thumbnail} />
             </div>
           ))}
         </Carousel>

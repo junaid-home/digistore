@@ -5,7 +5,7 @@ import * as React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Typography } from "@digistore/react-components";
 
-import { ProductType } from "../types";
+import { ProductType } from "../../../pages/index";
 import Link from "next/link";
 
 interface Options {
@@ -20,8 +20,8 @@ function SecondaryCard({ color = "grey", product }: Options) {
       style={{ backgroundColor: color }}
     >
       <div className={cls.showcase__secondary_card__content}>
-        <Link href={`/product/${product.id}`}>
-          <Typography variant="h3">{product.title}</Typography>
+        <Link href={`/product/${product.slug}`}>
+          <Typography variant="h3">{product.name}</Typography>
         </Link>
         <div>
           <Typography variant="body3" color="greyDark">
@@ -29,18 +29,18 @@ function SecondaryCard({ color = "grey", product }: Options) {
           </Typography>
           <div className={cls.showcase__secondary_card__price}>
             <Typography variant="h3" color="primary">
-              {product.discountedPrice}PKR
+              {product.selling_price}PKR
             </Typography>
             <Typography variant="body3" color="greyDark">
-              {product.price}PKR
+              {product.market_price}PKR
             </Typography>
           </div>
         </div>
       </div>
       <div className={cls.showcase__secondary_card__image}>
         <LazyLoadImage
-          src={product.imgSrc}
-          alt={product.title}
+          src={product.thumbnail}
+          alt={product.name}
           width={121}
           height={121}
           style={{ backgroundSize: "cover", backgroundRepeat: "no-repeat" }}

@@ -75,12 +75,12 @@ function Header({
               <Avatar onClick={onAccountClick} />
               <CartIcon
                 onClick={onCartClick}
-                totalCount={12}
+                totalCount={0}
                 className="lm-xl"
               />
               <LikeIcon
                 onClick={onLikesClick}
-                totalCount={9}
+                totalCount={0}
                 className="lm-xl"
               />
               <StackedText className="lm-xl" label="Total" value="1000PKR" />

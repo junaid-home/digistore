@@ -7,7 +7,7 @@ import Link from "next/link";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Button, Typography } from "@digistore/react-components";
 
-import { ProductType } from "../types";
+import { ProductType } from "../../../pages/index";
 
 function PrimaryCard({ product }: { product: ProductType }) {
   return (
@@ -17,11 +17,11 @@ function PrimaryCard({ product }: { product: ProductType }) {
           NEW YEAR SALE UPTO 10%
         </Typography>
         <Link
-          href={`/product/${product.id}`}
+          href={`/product/${product.slug}`}
           className={cls.showcase__primary_card__content_link}
         >
           <Typography variant="h1" className="tm-sm">
-            {product.title}
+            {product.name}
           </Typography>
         </Link>
         <Typography variant="body3" color="greyDark" className="tm-sm">
@@ -33,8 +33,8 @@ function PrimaryCard({ product }: { product: ProductType }) {
       </div>
       <div className={cls.showcase__primary_card__image}>
         <LazyLoadImage
-          src={product.imgSrc}
-          alt={product.title}
+          src={product.thumbnail}
+          alt={product.name}
           width={245}
           height={180}
           style={{ backgroundSize: "cover", backgroundRepeat: "no-repeat" }}

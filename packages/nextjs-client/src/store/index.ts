@@ -1,11 +1,14 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { authSlice } from "./auth-slice";
 import { createWrapper } from "next-redux-wrapper";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+import { authSlice } from "./auth-slice";
+import { categorySlice } from "./categories-slice";
+
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
+  [categorySlice.name]: categorySlice.reducer,
 });
 
 const makeConfigureStore = () => {

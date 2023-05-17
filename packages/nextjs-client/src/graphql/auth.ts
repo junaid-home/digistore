@@ -23,6 +23,16 @@ export const AUTHENTICATE_USER = gql`
             created_at
             updated_at
           }
+          likes {
+            id
+            name
+            slug
+            summary
+            market_price
+            selling_price
+            ratings
+            thumbnail
+          }
         }
       }
     }
@@ -54,6 +64,24 @@ export const REGISTER_USER = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const UPDATE_USER_DATA = gql`
+  mutation ($user: UserUpdate!) {
+    updateUser(user: $user) {
+      status
+      message
+    }
+  }
+`;
+
+export const ADD_PRODUCT_TO_USER_LIKE = gql`
+  mutation ($productId: String!) {
+    addLike(productId: $productId) {
+      status
+      message
     }
   }
 `;

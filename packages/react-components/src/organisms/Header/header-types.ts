@@ -1,7 +1,7 @@
 export interface CategoryType {
   id: string
-  value: string
-  label: string
+  name: string
+  slug: string
 }
 
 export interface HeaderOptions {

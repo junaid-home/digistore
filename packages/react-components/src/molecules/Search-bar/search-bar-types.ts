@@ -1,4 +1,4 @@
 export interface SearchBarOptions {
-  categories: {value: string; label: string}[]
+  categories: {id: string; name: string; slug: string}[]
   onSearchQuerySubmit?: (value: string, category: string) => void
 }

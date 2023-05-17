@@ -36,10 +36,11 @@ function Sidebar({
           <div className={cls.sidebar_categories_list}>
             {categories.map((cat) => (
               <span
-                onClick={() => setCategory(cat.value)}
+                key={cat.id}
+                onClick={() => setCategory(cat.slug)}
                 className={cls.sidebar_categories_list_item}
               >
-                <Typography variant="body2">{cat.label}</Typography>
+                <Typography variant="body2">{cat.name}</Typography>
               </span>
             ))}
           </div>
@@ -96,8 +97,8 @@ function Sidebar({
 
 interface CategoryType {
   id: string;
-  value: string;
-  label: string;
+  name: string;
+  slug: string;
 }
 
 interface SidebarOptions {

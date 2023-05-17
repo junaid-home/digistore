@@ -27,12 +27,18 @@ function ProductGallery({ thumbnails }: { thumbnails: string[] }) {
         showThumbs={showCarouselThumbs}
         renderThumbs={() =>
           thumbnails.map((thumb) => (
-            <Image alt="image" width={80} height={40} src={thumb} />
+            <Image key={thumb} alt="image" width={80} height={40} src={thumb} />
           ))
         }
       >
         {thumbnails.map((thumb) => (
-          <img alt="Thumbnail" src={thumb} />
+          <img
+            key={thumb}
+            alt="Thumbnail"
+            height={510}
+            width="auto"
+            src={thumb}
+          />
         ))}
       </Carousel>
     </div>

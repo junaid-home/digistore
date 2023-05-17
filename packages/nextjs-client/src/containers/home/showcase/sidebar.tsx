@@ -5,6 +5,7 @@ import * as React from "react";
 import Link from "next/link";
 
 import { Typography, icons } from "@digistore/react-components";
+import { CategoryType } from "../types";
 
 const { MenuIcon, ArrowDownIcon } = icons;
 
@@ -23,10 +24,10 @@ function Sidebar({ categories }: Options) {
       </div>
       <div className={cls.showcase_categories_items}>
         {categories.map((cat) => (
-          <Link key={cat.id} href={`/search?category=${cat.value}`}>
+          <Link key={cat.id} href={`/search?category=${cat.slug}`}>
             <div className={cls.showcase_categories_item} key={cat.id}>
               <Typography variant="body3" color="greyDark">
-                {cat.label}
+                {cat.name}
               </Typography>
               <ArrowDownIcon
                 className={cls.showcase_categories_item_arrow}
@@ -41,11 +42,7 @@ function Sidebar({ categories }: Options) {
 }
 
 interface Options {
-  categories: {
-    id: string;
-    value: string;
-    label: string;
-  }[];
+  categories: CategoryType[];
 }
 
 export default Sidebar;

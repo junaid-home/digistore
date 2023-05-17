@@ -6,7 +6,8 @@ import Sidebar from "./sidebar";
 
 import Links from "./links";
 import ContentArea from "./content-area";
-import { CategoryType, LinkType, ProductType } from "../types";
+import { CategoryType, LinkType } from "../types";
+import { ProductType } from "../../../pages";
 
 function Showcase({
   products,

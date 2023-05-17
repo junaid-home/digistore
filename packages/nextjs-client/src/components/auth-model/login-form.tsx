@@ -19,6 +19,7 @@ function LoginForm({ onSubmit, loading }: LoginFormProps) {
       <div className="tm-sm">
         <Input
           required
+          type="email"
           value={loginData.email}
           onChange={(e) =>
             setLoginData((prev) => ({ ...prev, email: e.target.value }))

@@ -78,6 +78,7 @@ export const typeDefs = `#graphql
 
     input SearchFilter {
       query: String!
+      category: String
       min_price: Float
       max_price: Float
       skip: Int
@@ -85,7 +86,7 @@ export const typeDefs = `#graphql
     }
 
     extend type Query {
-        product(id: String!): GetProductResponse!
+        product(slug: String!): GetProductResponse!
         products(filters: Filter!): GetProductsResponse!
         categories: GetCategoriesResponse!
         search(filters: SearchFilter!): GetProductsResponse!
@@ -184,13 +185,13 @@ export const resolvers = {
 
       try {
         const product = await productRepository.findOne({
-          where: { id: args.id },
+          where: { slug: args.slug },
           relations: productRelations,
         });
         if (!product)
           return responseSerializer(
             400,
-            `No product found with id: ${args.id}`
+            `No product found with slug: ${args.slug}`
           );
 
         return responseSerializer(200, product);
@@ -202,6 +203,7 @@ export const resolvers = {
       const productRepository = dataSource.getRepository(Product);
 
       const query = args.filters.query || "";
+      const category = args.filters.category || "";
       const min = args.filters.min_price || 0;
       const max = args.filters.max_price || Infinity;
       const skip = parseInt(args.filters.skip) || 0;
@@ -213,6 +215,9 @@ export const resolvers = {
             name: ILike(`%${query}%`),
             summary: ILike(`%${query}%`),
             selling_price: Between(min, max),
+            category: {
+              name: ILike(`%${category}%`),
+            },
           },
         });
 
@@ -221,6 +226,9 @@ export const resolvers = {
             name: ILike(`%${query}%`),
             summary: ILike(`%${query}%`),
             selling_price: Between(min, max),
+            category: {
+              name: ILike(`%${category}%`),
+            },
           },
           relations: ["gallery"],
           take: limit,

@@ -75,6 +75,7 @@ $sizes: (
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 2rem;
+  align-items: center;
 
   @include tablet {
     grid-template-columns: repeat(4, 1fr);
