@@ -23,11 +23,14 @@ import { selectAuthState, setUser } from "../../store/auth-slice";
 import client from "../../graphql/client";
 import { GET_PRODUCT_WITH_SLUG } from "../../graphql/product";
 import { ADD_PRODUCT_TO_USER_LIKE } from "../../graphql/auth";
+import { addToCart, selectCartState } from "../../store/cart-slice";
 
 function ProductDetails({ data }: { data: any }) {
   const alert = useAlert();
   const dispatch = useDispatch();
+
   const { isAuthenticated, user, token } = useSelector(selectAuthState);
+  const { items } = useSelector(selectCartState);
 
   const [addLike] = useMutation(ADD_PRODUCT_TO_USER_LIKE);
 
@@ -35,6 +38,63 @@ function ProductDetails({ data }: { data: any }) {
   const [size, setSize] = React.useState("large");
   const [color, setColor] = React.useState("blue");
   const [quantity, setQuantity] = React.useState(1);
+
+  const handleAddToCart = () => {
+    const itemIndex = items.findIndex((prod) => prod.id === data.id);
+
+    if (itemIndex === -1) {
+      dispatch(
+        addToCart({
+          id: data.id,
+          thumbnail: data.gallery[0].source,
+          name: data.name,
+          selling_price: data.selling_price,
+          size,
+          color,
+          quantity,
+        })
+      );
+
+      alert.success("Product Added To The Cart!");
+    } else {
+      alert.info("Product is Already in the Cart!");
+    }
+  };
+
+  const handleLike = async () => {
+    if (isAuthenticated && !isLiked) {
+      const { data: results } = await addLike({
+        variables: { productId: data.id },
+        context: {
+          headers: {
+            authorization: token,
+          },
+        },
+      });
+
+      if (results.addLike.status === "success") {
+        alert.success("Product is Added to Favorites");
+
+        const newLike = {
+          id: data.id,
+          slug: data.slug,
+          name: data.name,
+          ratings: data.ratings,
+          thumbnail: data.gallery[0].source,
+          summary: data.summary,
+          market_price: data.market_price,
+          selling_price: data.selling_price,
+        };
+
+        dispatch(
+          setUser({
+            ...user,
+            likes: [...oldLikes, newLike],
+          })
+        );
+      }
+    }
+  };
 
   React.useEffect(() => {
     data?.sizes?.length && setSize(data.sizes[0].name);
@@ -63,40 +123,7 @@ function ProductDetails({ data }: { data: any }) {
               <Typography variant="h3">{data.name}</Typography>
               <IconsView
                 isLiked={isLiked}
-                onLikeClick={async () => {
-                  if (isAuthenticated && !isLiked) {
-                    const { data: results } = await addLike({
-                      variables: { productId: data.id },
-                      context: {
-                        headers: {
-                          authorization: token,
-                        },
-                      },
-                    });
-
-                    if (results.addLike.status === "success") {
-                      alert.success("Product is Added to Favorites");
-
-                      const newLike = {
-                        id: data.id,
-                        slug: data.slug,
-                        name: data.name,
-                        ratings: data.ratings,
-                        thumbnail: data.gallery[0].source,
-                        summary: data.summary,
-                        market_price: data.market_price,
-                        selling_price: data.selling_price,
-                      };
-
-                      dispatch(
-                        setUser({
-                          ...user,
-                          likes: [...oldLikes, newLike],
-                        })
-                      );
-                    }
-                  }
-                }}
+                onLikeClick={handleLike}
                 ratings={data.ratings}
               />
               <div className="tm-xl">
@@ -134,7 +161,12 @@ function ProductDetails({ data }: { data: any }) {
               <Button color="primary" fullWidth>
                 Buy Now
               </Button>
-              <Button className="lm-lg" color="secondary" fullWidth>
+              <Button
+                onClick={handleAddToCart}
+                className="lm-lg"
+                color="secondary"
+                fullWidth
+              >
                 Add To Cart
               </Button>
             </div>
@@ -158,11 +190,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
         variables: { slug },
       });
 
-      return {
-        props: {
-          data: data.product.data || {},
-        },
-      };
+      if (data.product.status === "success") {
+        return {
+          props: {
+            data: data.product.data || {},
+          },
+        };
+      }
     }
 );
 

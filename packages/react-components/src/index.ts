@@ -1,7 +1,7 @@
 /*=============================================
 =                    Atoms                    =
 =============================================*/
-import {Button, Typography, Input, Label, icons} from './atoms'
+import {Button, Typography, Input, Label, icons, Spinner} from './atoms'
 
 /*=============================================
 =                    Molecules                =
@@ -31,6 +31,7 @@ export {
   Typography,
   Input,
   Label,
+  Spinner,
   /*----------  Molecules  ----------*/
   SearchBar,
   StackedText,

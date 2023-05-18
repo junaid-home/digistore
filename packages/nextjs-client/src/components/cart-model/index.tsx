@@ -4,43 +4,57 @@ import * as React from "react";
 
 import Image from "next/image";
 
+import { useDispatch, useSelector } from "react-redux";
+import LinesEllipsis from "react-lines-ellipsis";
+import Modal from "react-responsive-modal";
 import {
   Typography,
   Button,
   QuantityCounter,
 } from "@digistore/react-components";
 
-import LinesEllipsis from "react-lines-ellipsis";
-import Modal from "react-responsive-modal";
+import {
+  clearCart,
+  selectCartState,
+  updateCartItemQuantity,
+} from "../../store/cart-slice";
 
-function CartItem() {
-  const [quantity, setQuantity] = React.useState(0);
+function CartItem({ data }: { data: any }) {
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = React.useState(data.quantity);
+
+  React.useEffect(() => {
+    dispatch(updateCartItemQuantity({ id: data.id, quantity }));
+  }, [quantity]);
 
   return (
     <div className={cls.cart_item}>
       <div className={cls.cart_item_desc}>
         <Image
           className="rm-sm"
-          src="/assets/1.jpg"
-          alt="PCI"
+          src={data.thumbnail}
+          alt={data.name}
           width={70}
           height={70}
         />
         <div>
           <LinesEllipsis
-            text="Turbo Water Saver Shower Head and High Pressure Shower head Rainfall with Fan Bathroom Accessories"
+            text={data.name}
             maxLine={1}
             ellipsis="..."
             trimRight
             basedOn="letters"
           />
           <Typography className="tm-sm" color="greyDark" variant="body2">
-            Size: Large
+            Size: {data.size}
+          </Typography>
+          <Typography className="tm-sm" color="greyDark" variant="body2">
+            Color: {data.color}
           </Typography>
           <div className={cls.cart_item_mobile}>
             <div className={cls.cart_item_mobile_price}>
               <Typography className="tm-sm" color="black" variant="h3">
-                400PKR
+                {data.selling_price}PKR
               </Typography>
             </div>
             <div className={cls.cart_item_mobile_quantity}>
@@ -54,7 +68,7 @@ function CartItem() {
       </div>
       <div className={cls.cart_item_price}>
         <Typography color="primary" variant="h3">
-          400PKR
+          {data.selling_price}PKR
         </Typography>
       </div>
     </div>
@@ -62,6 +76,15 @@ function CartItem() {
 }
 
 function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { items } = useSelector(selectCartState);
+  const dispatch = useDispatch();
+
+  const shipping_charges = 200;
+  const sub_total = items.reduce(
+    (partial, item) => (partial += item.selling_price * item.quantity),
+    0
+  );
+
   return (
     <Modal
       open={open}
@@ -75,23 +98,23 @@ function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Typography variant="h3">Shopping Cart</Typography>
       </div>
       <div>
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {items.map((item) => (
+          <CartItem data={item} />
+        ))}
       </div>
       <div className={cls.summary}>
         <div className={cls.summary_item}>
           <Typography color="greyDark" variant="body2">
             Sub Total &nbsp;&nbsp;&nbsp;
           </Typography>
-          <Typography variant="h3">900PKR</Typography>
+          <Typography variant="h3">{sub_total}PKR</Typography>
         </div>
         <div className={cls.summary_item}>
           <Typography color="greyDark" variant="body2">
             Shipping Charge &nbsp;&nbsp;&nbsp;
           </Typography>
           <Typography color="greyDark" variant="body2">
-            200PKR
+            {shipping_charges}PKR
           </Typography>
         </div>
         <div className={cls.summary_item}>
@@ -107,12 +130,14 @@ function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
             Total Amount &nbsp;&nbsp;&nbsp;
           </Typography>
           <Typography color="primary" variant="h3">
-            920PKR
+            {shipping_charges + sub_total}PKR
           </Typography>
         </div>
       </div>
       <div className={cls.cto_button}>
-        <Button>Delete (3)</Button>
+        <Button onClick={() => dispatch(clearCart(null))}>
+          Delete ({items.length})
+        </Button>
         <Button color="primary">Checkout</Button>
       </div>
     </Modal>

@@ -77,6 +77,7 @@ export const GET_PRODUCT_WITH_SLUG = gql`
   query ($slug: String!) {
     product(slug: $slug) {
       code
+      status
       message
       data {
         id
@@ -108,7 +109,7 @@ export const GET_PRODUCT_WITH_SLUG = gql`
 `;
 
 export const SEARCH_PRODUCT = gql`
-  query Search($filters: SearchFilter!) {
+  mutation Search($filters: SearchFilter!) {
     search(filters: $filters) {
       hasNextPage
       data {

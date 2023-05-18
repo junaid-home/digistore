@@ -2,7 +2,7 @@
   "include": ["src"],
   "exclude": ["node_modules", "lib"],
   "compilerOptions": {
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "plugins": [{"name": "typescript-plugin-css-modules"}],
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */

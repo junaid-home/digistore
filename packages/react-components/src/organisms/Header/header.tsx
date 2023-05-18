@@ -1,8 +1,9 @@
 import cls from '@digistore/scss/lib/organisms/Header.module.css'
 
 import * as React from 'react'
-import {Input} from '../../atoms'
 
+import {Input} from '../../atoms'
+import {SearchBar, StackedText, Avatar} from '../../molecules'
 import {
   LogoIcon,
   CartIcon,
@@ -12,13 +13,14 @@ import {
   CloseIcon,
 } from '../../atoms/Icons'
 
-import {SearchBar, StackedText, Avatar} from '../../molecules'
-
 import {HeaderOptions} from './header-types'
 
 function Header({
   categories,
   fullBorder,
+  cartItemsCount,
+  likesCount,
+  totalPrice,
   onSearchQuerySubmit,
   onAccountClick,
   onCartClick,
@@ -75,15 +77,19 @@ function Header({
               <Avatar onClick={onAccountClick} />
               <CartIcon
                 onClick={onCartClick}
-                totalCount={0}
+                totalCount={cartItemsCount}
                 className="lm-xl"
               />
               <LikeIcon
                 onClick={onLikesClick}
-                totalCount={0}
+                totalCount={likesCount}
                 className="lm-xl"
               />
-              <StackedText className="lm-xl" label="Total" value="1000PKR" />
+              <StackedText
+                className="lm-xl"
+                label="Total"
+                value={`${totalPrice > 0 ? totalPrice : '0.00'}PKR`}
+              />
             </nav>
             <div className={cls.search_cto}>
               <span
@@ -100,9 +106,12 @@ function Header({
         </div>
       )}
       <nav className={cls.mobile_nav}>
-        <CartIcon onClick={onCartClick} totalCount={12} />
-        <LikeIcon onClick={onLikesClick} totalCount={9} />
-        <StackedText label="Total" value="1000PKR" />
+        <CartIcon onClick={onCartClick} totalCount={cartItemsCount} />
+        <LikeIcon onClick={onLikesClick} totalCount={likesCount} />
+        <StackedText
+          label="Total"
+          value={`${totalPrice > 0 ? totalPrice : '0.00'}PKR`}
+        />
       </nav>
     </header>
   )

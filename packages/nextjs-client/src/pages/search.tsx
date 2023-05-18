@@ -5,7 +5,7 @@ import * as React from "react";
 import { useRouter } from "next/router";
 
 import queryString from "querystring";
-import { Card, CardList } from "@digistore/react-components";
+import { Card, CardList, Typography } from "@digistore/react-components";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 
 import Layout from "../components/layout";
@@ -21,16 +21,12 @@ import { wrapper } from "../store";
 
 import { GET_ALL_CATEGORIES } from "../graphql/category";
 import client from "../graphql/client";
+import { useMutation } from "@apollo/client";
 
 function Search({ categories }: SearchProps) {
   const router = useRouter();
-
-  const { items, setItems, hasNextPage, loadMore } = useLoadItems(
-    SEARCH_PRODUCT,
-    {
-      key: "search",
-    }
-  );
+  const [items, setItems] = React.useState<any[]>([]);
+  const [searchProducts] = useMutation(SEARCH_PRODUCT);
 
   const [params, setParams] = useQueryParams({
     min: NumberParam,
@@ -51,14 +47,17 @@ function Search({ categories }: SearchProps) {
     min_price: min || 0,
     max_price: max || Infinity,
     limit: 10,
-    skip: items.length,
   };
 
   React.useEffect(() => {
-    loadMore({
-      filters: searchOpts,
+    searchProducts({
+      variables: {
+        filters: searchOpts,
+      },
+    }).then(({ data }) => {
+      data?.search?.data && setItems(data.search.data);
     });
-  }, [params]);
+  }, [params.query, params.category, params.max, params.min]);
 
   return (
     <Layout fullBorder color="grey">
@@ -71,39 +70,26 @@ function Search({ categories }: SearchProps) {
           <div className={cls.content}>
             <QueryDisplay query={query} />
             <div className={cls.content_card_list}>
-              <InfiniteScroll
-                dataLength={items.length}
-                next={() =>
-                  loadMore({
-                    filters: searchOpts,
-                  })
-                }
-                hasMore={hasNextPage}
-                loader={<LoadingCards />}
-                className={cls.grid}
-                endMessage={
-                  <div>
-                    <p style={{ textAlign: "center" }}>
-                      <b>No more products to show!</b>
-                    </p>
-                  </div>
-                }
-              >
-                {items &&
-                  items.map((prod) => (
-                    <Card
-                      key={prod.id}
-                      title={prod.name}
-                      discountedPrice={prod.selling_price}
-                      price={prod.market_price}
-                      ratings={prod.ratings}
-                      imgSrc={prod.thumbnail}
-                      onContentClick={() =>
-                        router.push(`/product/${prod.slug}`)
-                      }
-                    />
-                  ))}
-              </InfiniteScroll>
+              <CardList>
+                {items.map((prod) => (
+                  <Card
+                    key={prod.id}
+                    title={prod.name}
+                    discountedPrice={prod.selling_price}
+                    price={prod.market_price}
+                    ratings={prod.ratings}
+                    imgSrc={prod.thumbnail}
+                    onContentClick={() => router.push(`/product/${prod.slug}`)}
+                  />
+                ))}
+              </CardList>
+              {!items.length && (
+                <div style={{ textAlign: "center" }}>
+                  <Typography variant="h3">
+                    No Products to show!, Please try changing search query
+                  </Typography>
+                </div>
+              )}
             </div>
           </div>
         </div>

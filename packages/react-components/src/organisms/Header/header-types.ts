@@ -12,4 +12,7 @@ export interface HeaderOptions {
   onLogoClick?: () => void
   onLikesClick?: () => void
   fullBorder?: boolean
+  likesCount: number
+  cartItemsCount: number
+  totalPrice: number
 }

@@ -5,10 +5,12 @@ import storage from "redux-persist/lib/storage";
 
 import { authSlice } from "./auth-slice";
 import { categorySlice } from "./categories-slice";
+import { cartSlice } from "./cart-slice";
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   [categorySlice.name]: categorySlice.reducer,
+  [cartSlice.name]: cartSlice.reducer,
 });
 
 const makeConfigureStore = () => {
@@ -27,7 +29,7 @@ export const makeStore = () => {
   } else {
     const persistConfig = {
       key: "nextjs",
-      whitelist: ["auth"],
+      whitelist: ["auth", "cart"],
       storage,
     };
 

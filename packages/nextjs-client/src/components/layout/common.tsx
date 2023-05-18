@@ -5,19 +5,24 @@ import * as React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { Header, Footer, TopBanner } from "@digistore/react-components";
 import queryString from "querystring";
+import { useAlert } from "react-alert";
+import { useSelector } from "react-redux";
+import { Header, Footer, TopBanner } from "@digistore/react-components";
 
 import AuthModel from "../auth-model";
 import CartModel from "../cart-model";
-import { useSelector } from "react-redux";
+
 import { selectAuthState } from "../../store/auth-slice";
 import { selectCategoriesState } from "../../store/categories-slice";
+import { selectCartState } from "../../store/cart-slice";
 
 function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
   const router = useRouter();
-  const { isAuthenticated } = useSelector(selectAuthState);
+  const alert = useAlert();
+  const { isAuthenticated, user } = useSelector(selectAuthState);
   const { categories } = useSelector(selectCategoriesState);
+  const { items } = useSelector(selectCartState);
 
   const [openAuthModel, setOpenAuthModel] = React.useState(false);
   const [openCartModel, setOpenCartModel] = React.useState(false);
@@ -39,6 +44,24 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
     }
   };
 
+  const handleCartClick = () => {
+    if (items.length) {
+      if (isAuthenticated) {
+        setOpenCartModel(true);
+      } else {
+        setOpenAuthModel(true);
+      }
+    } else {
+      alert.info("Cart is Empty, Please Add Item(s) to open!");
+    }
+  };
+
+  const likesCount = user?.likes?.length || 0;
+  const totalPrice = items.reduce(
+    (sum, item) => (sum += item.selling_price * item.quantity),
+    0
+  );
+
   return (
     <React.Fragment>
       <Head>
@@ -54,9 +77,12 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         onSearchQuerySubmit={handleSearchSubmit}
         fullBorder={fullBorder}
         onAccountClick={handleAccountClick}
-        onCartClick={() => setOpenCartModel((prev) => !prev)}
+        onCartClick={handleCartClick}
         onLogoClick={() => router.push("/")}
         onLikesClick={() => router.push("/likes")}
+        likesCount={likesCount}
+        cartItemsCount={items.length}
+        totalPrice={totalPrice}
       />
       <div className={cls.content_container}>
         <div className="container">{children}</div>

@@ -89,6 +89,9 @@ export const typeDefs = `#graphql
         product(slug: String!): GetProductResponse!
         products(filters: Filter!): GetProductsResponse!
         categories: GetCategoriesResponse!
+    }
+
+    extend type Mutation {
         search(filters: SearchFilter!): GetProductsResponse!
     }
 
@@ -199,6 +202,8 @@ export const resolvers = {
         return responseSerializer(500, err.message);
       }
     },
+  },
+  Mutation: {
     async search(_parent, args, _context, _info) {
       const productRepository = dataSource.getRepository(Product);
 

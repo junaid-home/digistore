@@ -10,21 +10,21 @@ import * as React from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 
+import NextNProgress from "nextjs-progressbar";
+import AlertTemplate from "react-alert-template-basic";
+import { Provider } from "react-redux";
 import { NextAdapter } from "next-query-params";
 import { QueryParamProvider } from "use-query-params";
-import NextNProgress from "nextjs-progressbar";
-
 import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from "react-redux";
-import { wrapper } from "../store";
-
+import { Spinner } from "@digistore/react-components";
 import {
   transitions,
   positions,
   Provider as AlertProvider,
   AlertOptions,
 } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
+
+import { wrapper } from "../store";
 
 import { ApolloProvider } from "@apollo/client";
 import client from "../graphql/client";
@@ -52,10 +52,7 @@ function App({ Component, ...rest }: AppProps) {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <ApolloProvider client={client}>
             <Provider store={store}>
-              <PersistGate
-                persistor={store.__persistor}
-                loading={<div>Loading</div>}
-              >
+              <PersistGate persistor={store.__persistor} loading={<Spinner />}>
                 <Component {...pageProps} />
               </PersistGate>
             </Provider>
