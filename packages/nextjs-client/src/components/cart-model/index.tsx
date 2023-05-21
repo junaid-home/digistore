@@ -75,7 +75,15 @@ function CartItem({ data }: { data: any }) {
   );
 }
 
-function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
+function CartModel({
+  open,
+  onClose,
+  openPaymentModel,
+}: {
+  open: boolean;
+  onClose: () => void;
+  openPaymentModel: () => void;
+}) {
   const { items } = useSelector(selectCartState);
   const dispatch = useDispatch();
 
@@ -84,6 +92,11 @@ function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
     (partial, item) => (partial += item.selling_price * item.quantity),
     0
   );
+
+  const handleCheckout = () => {
+    onClose();
+    openPaymentModel();
+  };
 
   return (
     <Modal
@@ -138,7 +151,9 @@ function CartModel({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Button onClick={() => dispatch(clearCart(null))}>
           Delete ({items.length})
         </Button>
-        <Button color="primary">Checkout</Button>
+        <Button onClick={handleCheckout} color="primary">
+          Checkout
+        </Button>
       </div>
     </Modal>
   );

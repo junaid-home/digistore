@@ -13,6 +13,9 @@ import Promotion from "../models/Promotion";
 import Category from "../models/Category";
 import Image from "../models/Image";
 import Product from "../models/Product";
+import Payment from "../models/Payment";
+import OrderItem from "../models/Order-Item";
+import Order from "../models/Order";
 
 import { SeedData1683041917045 } from "../migrations/1683041917045-seedDataMigration";
 
@@ -25,7 +28,19 @@ const dataSource = new DataSource({
   database: process.env.POSTGRES_DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Address, Size, Color, Promotion, Category, Image, Product],
+  entities: [
+    User,
+    Address,
+    Size,
+    Color,
+    Promotion,
+    Category,
+    Image,
+    Product,
+    Payment,
+    OrderItem,
+    Order,
+  ],
   migrations: [SeedData1683041917045],
   subscribers: [],
 });

@@ -15,4 +15,5 @@ export interface HeaderOptions {
   likesCount: number
   cartItemsCount: number
   totalPrice: number
+  user: any
 }

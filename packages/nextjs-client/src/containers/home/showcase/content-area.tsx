@@ -13,10 +13,6 @@ import { ProductType } from "../../../pages";
 function ContentArea({ products }: { products: ProductType[] }) {
   const router = useRouter();
 
-  // if (products.length < 3) {
-  //   throw new Error("There should be at least 3 products!.");
-  // }
-
   return (
     <React.Fragment>
       <div className={cls.showcase}>

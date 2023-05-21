@@ -3,6 +3,10 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 
 import { resolvers as userResolvers, typeDefs as userTypeDefs } from "./user";
 import {
+  resolvers as orderResolvers,
+  typeDefs as orderTypeDefs,
+} from "./order";
+import {
   resolvers as productResolvers,
   typeDefs as productTypeDefs,
 } from "./product";
@@ -26,8 +30,8 @@ const Query = `#graphql
 const resolvers = {};
 
 const schema = makeExecutableSchema({
-  typeDefs: [Query, userTypeDefs, productTypeDefs],
-  resolvers: merge(resolvers, userResolvers, productResolvers),
+  typeDefs: [Query, userTypeDefs, productTypeDefs, orderTypeDefs],
+  resolvers: merge(resolvers, userResolvers, productResolvers, orderResolvers),
 });
 
 export default schema;

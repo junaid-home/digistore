@@ -8,18 +8,3 @@ export interface ProductType {
   price: number;
   ratings: number;
 }
-
-export interface OrderItemType {
-  quantity: number;
-  size: string;
-  color: string;
-  product: ProductType;
-}
-
-export interface OrderType {
-  status: string;
-  id: string;
-  date: string;
-  total: number;
-  items: OrderItemType[];
-}

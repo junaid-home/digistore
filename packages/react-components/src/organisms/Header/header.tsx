@@ -16,6 +16,7 @@ import {
 import {HeaderOptions} from './header-types'
 
 function Header({
+  user,
   categories,
   fullBorder,
   cartItemsCount,
@@ -74,7 +75,7 @@ function Header({
               />
             </div>
             <nav className={cls.cto_buttons}>
-              <Avatar onClick={onAccountClick} />
+              <Avatar user={user} onClick={onAccountClick} />
               <CartIcon
                 onClick={onCartClick}
                 totalCount={cartItemsCount}

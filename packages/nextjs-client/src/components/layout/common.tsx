@@ -16,6 +16,7 @@ import CartModel from "../cart-model";
 import { selectAuthState } from "../../store/auth-slice";
 import { selectCategoriesState } from "../../store/categories-slice";
 import { selectCartState } from "../../store/cart-slice";
+import PaymentModel from "../payment-model";
 
 function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
   const router = useRouter();
@@ -26,6 +27,7 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
 
   const [openAuthModel, setOpenAuthModel] = React.useState(false);
   const [openCartModel, setOpenCartModel] = React.useState(false);
+  const [openPaymentModel, setOpenPaymentModel] = React.useState(false);
 
   const handleSearchSubmit = (query: string, category: string) => {
     const searchQuery = queryString.stringify({
@@ -79,10 +81,11 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         onAccountClick={handleAccountClick}
         onCartClick={handleCartClick}
         onLogoClick={() => router.push("/")}
-        onLikesClick={() => router.push("/likes")}
+        onLikesClick={() => isAuthenticated && router.push("/likes")}
         likesCount={likesCount}
         cartItemsCount={items.length}
         totalPrice={totalPrice}
+        user={user}
       />
       <div className={cls.content_container}>
         <div className="container">{children}</div>
@@ -92,7 +95,12 @@ function Layout({ children, fullBorder, color = "white" }: LayoutOptions) {
         color={color === "white" ? "#f3f3f3" : "white"}
       />
       <AuthModel open={openAuthModel} setOpen={setOpenAuthModel} />
-      <CartModel open={openCartModel} onClose={() => setOpenCartModel(false)} />
+      <CartModel
+        open={openCartModel}
+        onClose={() => setOpenCartModel(false)}
+        openPaymentModel={() => setOpenPaymentModel(true)}
+      />
+      <PaymentModel open={openPaymentModel} setOpen={setOpenPaymentModel} />
     </React.Fragment>
   );
 }

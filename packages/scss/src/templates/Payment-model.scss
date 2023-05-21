@@ -1,0 +1,23 @@
+@import "./theme/foundation";
+
+.container {
+    border-bottom: 1px solid #ddd;
+    padding: 1.3rem;
+    background: #f1f1f1;
+
+    @include tablet {
+        padding: 1.8rem;
+    }
+}
+
+.btn_cto {
+    display: flex;
+
+    & button {
+        padding: 1rem;
+    }
+
+    & button:focus {
+        outline: none;
+    }
+}

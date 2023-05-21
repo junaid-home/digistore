@@ -4,41 +4,37 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  OneToMany,
-  JoinTable,
+  JoinColumn,
+  OneToOne,
+  ManyToOne,
   Relation,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
-import Product from "./Product";
-import Order from "./Order";
+import User from "./User";
+import Payment from "./Payment";
+import OrderItem from "./Order-Item";
 
 @Entity()
-class User {
+class Order {
   @PrimaryColumn("uuid")
   id: string;
 
   @Column("varchar", { length: 50 })
-  name: string;
+  status: string;
 
-  @Column("varchar", { unique: true })
-  email: string;
+  @OneToOne(() => Payment, { onDelete: "CASCADE" })
+  @JoinColumn()
+  payment: Payment;
 
-  @Column("varchar", { length: 11 })
-  phone: string;
+  @ManyToOne(() => User, (user) => user.orders, { onDelete: "CASCADE" })
+  @JoinColumn()
+  user: Relation<User>;
 
-  @Column("varchar")
-  password: string;
-
-  @Column("varchar")
-  salt: string;
-
-  @ManyToMany(() => Product)
+  @ManyToMany(() => OrderItem)
   @JoinTable()
-  likes: Product[];
-
-  @OneToMany(() => Order, (order) => order.user)
-  orders: Relation<Order>[];
+  items: OrderItem[];
 
   @CreateDateColumn({
     type: "timestamp",
@@ -53,4 +49,4 @@ class User {
   public updated_at: Date;
 }
 
-export default User;
+export default Order;

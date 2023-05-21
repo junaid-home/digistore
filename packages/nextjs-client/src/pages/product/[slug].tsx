@@ -24,20 +24,44 @@ import client from "../../graphql/client";
 import { GET_PRODUCT_WITH_SLUG } from "../../graphql/product";
 import { ADD_PRODUCT_TO_USER_LIKE } from "../../graphql/auth";
 import { addToCart, selectCartState } from "../../store/cart-slice";
+import PaymentModel from "../../components/payment-model";
 
 function ProductDetails({ data }: { data: any }) {
   const alert = useAlert();
   const dispatch = useDispatch();
+
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [size, setSize] = React.useState("large");
+  const [color, setColor] = React.useState("blue");
+  const [quantity, setQuantity] = React.useState(1);
+  const [openPaymentModel, setOpenPaymentModel] = React.useState(false);
 
   const { isAuthenticated, user, token } = useSelector(selectAuthState);
   const { items } = useSelector(selectCartState);
 
   const [addLike] = useMutation(ADD_PRODUCT_TO_USER_LIKE);
 
-  const [isLiked, setIsLiked] = React.useState(false);
-  const [size, setSize] = React.useState("large");
-  const [color, setColor] = React.useState("blue");
-  const [quantity, setQuantity] = React.useState(1);
+  const handleBuyNow = () => {
+    const itemIndex = items.findIndex((prod) => prod.id === data.id);
+
+    if (itemIndex === -1) {
+      dispatch(
+        addToCart({
+          id: data.id,
+          thumbnail: data.gallery[0].source,
+          name: data.name,
+          selling_price: data.selling_price,
+          size,
+          color,
+          quantity,
+        })
+      );
+    }
+
+    if (items.length) {
+      setOpenPaymentModel((prev) => !prev);
+    }
+  };
 
   const handleAddToCart = () => {
     const itemIndex = items.findIndex((prod) => prod.id === data.id);
@@ -158,7 +182,11 @@ function ProductDetails({ data }: { data: any }) {
               </div>
             </div>
             <div className={cls.cto_buttons}>
-              <Button color="primary" fullWidth>
+              <Button
+                onClick={() => setOpenPaymentModel(true)}
+                color="primary"
+                fullWidth
+              >
                 Buy Now
               </Button>
               <Button
@@ -176,6 +204,7 @@ function ProductDetails({ data }: { data: any }) {
           <SanitizedHtml html={data.desc} />
         </div>
       </div>
+      <PaymentModel open={openPaymentModel} setOpen={handleBuyNow} />
     </Layout>
   );
 }

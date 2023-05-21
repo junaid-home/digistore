@@ -6,10 +6,13 @@ import Link from "next/link";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Button, Typography } from "@digistore/react-components";
+import { useRouter } from "next/router";
 
 import { ProductType } from "../../../pages/index";
 
 function PrimaryCard({ product }: { product: ProductType }) {
+  const router = useRouter();
+
   return (
     <div className={cls.showcase__primary_card}>
       <div className={cls.showcase__primary_card__content}>
@@ -27,7 +30,11 @@ function PrimaryCard({ product }: { product: ProductType }) {
         <Typography variant="body3" color="greyDark" className="tm-sm">
           {product.summary}
         </Typography>
-        <Button className="tm-lg" color="secondary">
+        <Button
+          onClick={() => router.push(`/product/${product.slug}`)}
+          className="tm-lg"
+          color="secondary"
+        >
           SHOP NOW
         </Button>
       </div>

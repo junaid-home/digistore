@@ -4,34 +4,33 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  Relation,
+  JoinColumn,
+  ManyToOne,
 } from "typeorm";
 
+import Color from "./Color";
+import Size from "./Size";
 import Product from "./Product";
 
 @Entity()
-class Promotion {
+class OrderItem {
   @PrimaryColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 50 })
-  name: string;
+  @Column("int")
+  quantity: number;
 
-  @Column("varchar")
-  desc: string;
+  @ManyToOne(() => Size)
+  @JoinColumn()
+  size: Size;
 
-  @Column("boolean")
-  active: boolean;
+  @ManyToOne(() => Color)
+  @JoinColumn()
+  color: Color;
 
-  @Column("decimal")
-  discount_percentage: number;
-
-  @Column("timestamp")
-  expiry_date: Date;
-
-  @OneToMany(() => Product, (product) => product.promotion)
-  product: Relation<Product>[];
+  @ManyToOne(() => Product)
+  @JoinColumn()
+  product: Product;
 
   @CreateDateColumn({
     type: "timestamp",
@@ -46,4 +45,4 @@ class Promotion {
   public updated_at: Date;
 }
 
-export default Promotion;
+export default OrderItem;
