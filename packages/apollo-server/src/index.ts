@@ -1,30 +1,42 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { expressMiddleware } from "@apollo/server/express4";
+import cors from "cors";
+import pkg from "body-parser";
+import express from "express";
 
 import schema from "./graphql";
 
 import dataProvider from "./config/db";
 
-import { decodeToken } from "./helpers/jwt";
+import checkoutRouter from "./routes/checkout";
+import webhookRouter from "./routes/webhook";
+import setAuthContext from "./middlewares/set-auth-context";
+
+const app = express();
 
 const server = new ApolloServer({
   schema,
 });
 
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
-  context: async ({ req, res }) => {
-    const token = req.headers.authorization || "";
+await server.start();
 
-    const isAuthenticated = Boolean(decodeToken(token)?.id);
+// stripe requires "raw bodyParser" so this route should be placed before bodyParser middleware
+app.use("/stripe/webhook", webhookRouter);
 
-    let user;
-    if (isAuthenticated) user = decodeToken(token);
+app.use(pkg.json());
+app.use(cors<cors.CorsRequest>());
 
-    return { isAuthenticated, user };
-  },
-});
-console.log(`🚀 [ SERVER ] running at: ${url}`);
+app.use("/checkout-stripe", checkoutRouter);
+app.use(
+  "/graphql",
+  expressMiddleware(server, {
+    context: setAuthContext,
+  })
+);
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 [ SERVER ] running at: http://localhost:4000/graphql`)
+);
 
 dataProvider.initialize().then((conn) => {
   console.log(`📙 [ DATABASE ] connection established!`);

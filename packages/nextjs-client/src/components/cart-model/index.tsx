@@ -112,7 +112,7 @@ function CartModel({
       </div>
       <div>
         {items.map((item) => (
-          <CartItem data={item} />
+          <CartItem key={item.id} data={item} />
         ))}
       </div>
       <div className={cls.summary}>

@@ -5,12 +5,7 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
-import {
-  CardList,
-  Card,
-  Typography,
-  Spinner,
-} from "@digistore/react-components";
+import { CardList, Card, Typography } from "@digistore/react-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Layout from "../components/layout";

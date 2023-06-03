@@ -19,13 +19,13 @@ function PaymentModel({ open, setOpen }: PaymentModelProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [checkingOut, setCheckingOut] = React.useState(false);
+
   const { token } = useSelector(selectAuthState);
   const { items } = useSelector(selectCartState);
   const [saveOrder, { loading }] = useMutation(SAVE_ORDER_WITH_COD);
 
-  const handleCOD = async () => {
-    setOpen(false);
-
+  const handleCODPayment = async () => {
     const orderItems = items.map((item) => ({
       id: item.id,
       color: item.color,
@@ -50,6 +50,32 @@ function PaymentModel({ open, setOpen }: PaymentModelProps) {
     }
   };
 
+  const handleCardPayment = async () => {
+    setCheckingOut(true);
+
+    const orderItems = items.map((item) => ({
+      color: item.color,
+      product: item.id,
+      size: item.size,
+      quantity: item.quantity,
+    }));
+
+    const response = await fetch("http://localhost:4000/checkout-stripe", {
+      method: "POST",
+      body: JSON.stringify({ items: orderItems }),
+      headers: {
+        Authorization: token as string,
+        "Content-Type": "application/json",
+      },
+    });
+    const jsonData = await response.json();
+
+    if (jsonData?.url) {
+      dispatch(clearCart(null));
+      window.location.href = jsonData.url;
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -63,14 +89,21 @@ function PaymentModel({ open, setOpen }: PaymentModelProps) {
         <Typography variant="h3">How You would like to pay?</Typography>
       </div>
       <div className={cls.btn_cto}>
-        <Button color="secondary" fullWidth>
+        <Button
+          loadingText="Checking out..."
+          isLoading={checkingOut}
+          isDisabled={checkingOut}
+          onClick={handleCardPayment}
+          color="secondary"
+          fullWidth
+        >
           <PaymentCardIcon /> Pay With Card
         </Button>
         <Button
           isDisabled={loading}
           isLoading={loading}
           loadingText="Saving Order..."
-          onClick={handleCOD}
+          onClick={handleCODPayment}
           color="primary"
           fullWidth
         >

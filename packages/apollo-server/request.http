@@ -1,0 +1,28 @@
+POST http://localhost:4000/checkout-stripe HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdkOTczNzZjLWE1ODItNDhmZC1hMzg3LTE3MzI3YWUxMDZmMCIsIm5hbWUiOiJKdW5haWQgSmF2ZWQiLCJlbWFpbCI6ImpqbndmcEBnbWFpbC5jb20iLCJwaG9uZSI6IjAzMTQ5MjA0MDQ0Iiwic2FsdCI6IjcyZTBiNDA2NDQyZDhiMTkzYTY3NDFjYzA0OTE2NzY1IiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMDhUMDM6MDQ6NDQuNTkwWiIsInVwZGF0ZWRfYXQiOiIyMDIzLTA1LTIyVDAwOjQ3OjA1LjM0MloiLCJsaWtlcyI6W10sImFkZHJlc3MiOnsiaWQiOiJkNTVkMGNmNy0xNjIyLTQ1OTUtODIwYS1jZmI2ZjRlYzc4NTMiLCJjaXR5IjoiSGFyaXB1ciIsInBvc3RhbF9jb2RlIjoyMjYyMCwicmVzaWRlbnRpYWxfYWRkcmVzcyI6Ik1vaGFsbGFoIExhdGVlZmFiYWQgdmlsbGFnZSBEYXJ3ZXNoIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMDhUMDM6MDQ6NDQuNTkwWiIsInVwZGF0ZWRfYXQiOiIyMDIzLTA1LTE3VDEwOjQ5OjA5Ljk0OVoifSwiaWF0IjoxNjg1ODA3OTY0LCJleHAiOjE2ODY0MTI3NjR9.4uh8zgLCo-aeQhoja7CWZoAW3_sZOVJTkVDmQfFlSc0
+
+{
+"items": [
+    {
+      "color": "Red",
+      "product": "7cb472c2-36cb-4b35-a300-e4b61326fc4b",
+      "quantity": 1,
+      "size": "Small"
+    },
+     {
+      "color": "Green",
+      "product": "2f4a94d2-78f2-4662-8c6d-0da234b6407e",
+      "quantity": 2,
+      "size": "Large"
+    }
+  ]
+}
+###
+
+POST http://localhost:4000/stripe/webhook HTTP/1.1
+Content-Type: application/json
+
+{
+
+}

@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { useRouter } from "next/router";
 
-import queryString from "querystring";
 import { Card, CardList, Typography } from "@digistore/react-components";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 
@@ -12,10 +11,7 @@ import Layout from "../components/layout";
 import Sidebar from "../containers/search/sidebar";
 import QueryDisplay from "../containers/search/query-display";
 
-import InfiniteScroll from "react-infinite-scroll-component";
 import { SEARCH_PRODUCT } from "../graphql/product";
-import useLoadItems from "../hooks/use-load-items";
-import LoadingCards from "../components/loading-cards";
 
 import { wrapper } from "../store";
 

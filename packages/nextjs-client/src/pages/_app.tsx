@@ -52,7 +52,10 @@ function App({ Component, ...rest }: AppProps) {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <ApolloProvider client={client}>
             <Provider store={store}>
-              <PersistGate persistor={store.__persistor} loading={<Spinner />}>
+              <PersistGate
+                persistor={store.__persistor}
+                loading={<Spinner overlay />}
+              >
                 <Component {...pageProps} />
               </PersistGate>
             </Provider>

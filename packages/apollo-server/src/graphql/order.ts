@@ -94,7 +94,7 @@ export const resolvers = {
           "items.color",
         ],
         order: {
-          id: "ASC",
+          created_at: "DESC",
         },
       });
 
